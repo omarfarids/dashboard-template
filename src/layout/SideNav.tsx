@@ -5,7 +5,7 @@ import { items } from "./DashboardList";
 import { SideNavItem } from "./SideNavItem";
 import { useTheme } from "@mui/material/styles";
 import { dashboardItems } from "@/types/layout";
-import { COLORS } from "@/assets/colors/layout";
+import { LAYOUT_COLORS } from "@/assets/colors/layout";
 
 export const SideNav = (props: { open: boolean; onClose: () => void }) => {
   // ----------- hooks -------------
@@ -82,7 +82,7 @@ export const SideNav = (props: { open: boolean; onClose: () => void }) => {
         open
         PaperProps={{
           sx: {
-            backgroundColor: COLORS.sideBarBackgroundColor,
+            backgroundColor: LAYOUT_COLORS.sideBarBackgroundColor,
             color: "black",
             width: 300,
             border: "none",

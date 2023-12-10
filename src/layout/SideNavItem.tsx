@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Box, ButtonBase, Collapse } from "@mui/material";
 import React from "react";
 import { dashboardItems } from "@/types/layout";
-import { COLORS } from "@/assets/colors/layout";
+import { LAYOUT_COLORS } from "@/assets/colors/layout";
 
 export const SideNavItem = ({
   active,
@@ -50,16 +50,16 @@ export const SideNavItem = ({
           display: "flex",
           flexDirection: "row",
           gap: 1,
-          color: COLORS.sideBarTextColor,
+          color: LAYOUT_COLORS.sideBarTextColor,
           fontSize: 20,
           fontWeight: "bold",
           py: 2,
           ...(active && {
-            backgroundColor: COLORS.sideBarItemActive,
+            backgroundColor: LAYOUT_COLORS.sideBarItemActive,
           }),
           width: "250px",
           "&:hover": {
-            bgcolor: COLORS.sideBarItemHover,
+            bgcolor: LAYOUT_COLORS.sideBarItemHover,
           },
         }}
         {...linkProps}

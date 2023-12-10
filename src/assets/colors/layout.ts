@@ -1,4 +1,4 @@
-export const COLORS = {
+export const LAYOUT_COLORS = {
   sideBarTextColor: "#fff",
   sideBarBackgroundColor: "#0960b5",
   sideBarItemHover: "#d6d6db",
