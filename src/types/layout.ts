@@ -1,17 +1,29 @@
-export type dashboardItems = {
-  external: boolean;
-  disabled: boolean;
-  menu?: boolean;
-  title: string;
+export interface Type_Lang_Model {
+  lang: string;
+  dir: string;
+}
+
+export interface Type_User_Data {
+  name: string;
+  email: string;
+  role: string;
+  id: string;
+  active: boolean;
+  avatar?: string;
+}
+
+export type Type_Modal_types =
+  | "edit"
+  | "view"
+  | "delete"
+  | "add"
+  | "status"
+  | "other"
+  | "filter"
+  | undefined;
+
+export interface Type_Nav_Items {
+  name: string;
   path: string;
-  module: string;
-  icon: JSX.Element;
-  onClick?: () => void;
-  active?: boolean;
-  children?: {
-    path: string;
-    active: boolean;
-    icon: JSX.Element;
-    title: string;
-  }[];
-};
+  icon: string;
+}
