@@ -15,31 +15,29 @@ const TextInput = forwardRef(
       setIsPassword(!isPassword);
     };
     return (
-      <div>
-        <div className="relative">
-          <input
-            type={isPassword ? type : "text"}
-            placeholder={placeholder}
-            className="input input-bordered input-md w-full sm:w-[450px] rounded-sm"
-            {...props}
-            ref={ref}
-          />
-          {type === "password" && (
-            <div className="absolute right-3 top-[13px] cursor-pointer">
-              {isPassword ? (
-                <VisibilityOutlinedIcon
-                  fontSize="small"
-                  onClick={togglePassword}
-                />
-              ) : (
-                <VisibilityOffOutlinedIcon
-                  fontSize="small"
-                  onClick={togglePassword}
-                />
-              )}
-            </div>
-          )}
-        </div>
+      <div className="relative w-full sm:w-[450px]">
+        <input
+          type={isPassword ? type : "text"}
+          placeholder={placeholder}
+          className="input input-bordered w-full input-md rounded-sm"
+          {...props}
+          ref={ref}
+        />
+        {type === "password" && (
+          <div className="absolute right-3 top-[13px] cursor-pointer">
+            {isPassword ? (
+              <VisibilityOutlinedIcon
+                fontSize="small"
+                onClick={togglePassword}
+              />
+            ) : (
+              <VisibilityOffOutlinedIcon
+                fontSize="small"
+                onClick={togglePassword}
+              />
+            )}
+          </div>
+        )}
       </div>
     );
   }
