@@ -44,7 +44,7 @@ const SignUp = () => {
             <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
           </div>
         </div>
-        <TextInput placeholder="User Name..." {...register("userName")} />
+        <TextInput placeholder="username..." {...register("userName")} />
         <p>{errors.userName?.message}</p>
         <TextInput placeholder="Email Address" {...register("email")} />
         <p>{errors.email?.message}</p>
@@ -57,7 +57,7 @@ const SignUp = () => {
         <TextInput
           placeholder="Confirm Password"
           type="password"
-          {...register("password")}
+          {...register("confirmpassword")}
         />
         <p>{errors.confirmPassword?.message}</p>
         <Button label="Submit" className="w-full rounded-sm mt-2" />

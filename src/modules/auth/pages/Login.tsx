@@ -26,7 +26,6 @@ const Login = () => {
   // ------------ functions ------------
   const onSubmit: SubmitHandler<any> = () => {
     navigate("/home");
-    navigate("/SignUp");
   };
 
   return (
@@ -48,7 +47,7 @@ const Login = () => {
         <Button
           label="Sign Up"
           className="w-full rounded-sm mt-2"
-          onClick={() => navigate("/auth/SignUp")}
+          onClick={() => navigate("/auth/sign-up")}
         />
       </form>
     </section>

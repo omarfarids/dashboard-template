@@ -7,8 +7,8 @@ export default [
     name: "Login",
   },
   {
-    path: "SignUp",
+    path: "sign-up",
     element: <SignUp />,
-    name: "SignUp",
+    name: "Sign-Up",
   },
 ];
