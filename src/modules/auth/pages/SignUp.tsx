@@ -6,11 +6,15 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-const Login = () => {
+const SignUp = () => {
   // ------------ hooks -------------
   const schema = yup.object().shape({
-    email: yup.string().email().required(),
-    password: yup.string().required(),
+    userName: yup.string().required("User Name is a required field"),
+    email: yup.string().email().required("Email is a required field"),
+    password: yup.string().required("Password is a required field"),
+    confirmPassword: yup
+      .string()
+      .required("Confirm Password is a required field"),
   });
 
   const {
@@ -25,8 +29,7 @@ const Login = () => {
 
   // ------------ functions ------------
   const onSubmit: SubmitHandler<any> = () => {
-    navigate("/home");
-    navigate("/SignUp");
+    navigate("/login");
   };
 
   return (
@@ -35,7 +38,14 @@ const Login = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-2 items-center"
       >
-        <h1 className="text-3xl font-semibold mb-5">Login to your account</h1>
+        <h1 className="text-3xl font-semibold mb-5">Sign Up</h1>
+        <div className="avatar">
+          <div className="w-24 rounded-full">
+            <img src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
+          </div>
+        </div>
+        <TextInput placeholder="User Name..." {...register("userName")} />
+        <p>{errors.userName?.message}</p>
         <TextInput placeholder="Email Address" {...register("email")} />
         <p>{errors.email?.message}</p>
         <TextInput
@@ -44,15 +54,16 @@ const Login = () => {
           {...register("password")}
         />
         <p>{errors.password?.message}</p>
-        <Button label="Login" className="w-full rounded-sm mt-2" />
-        <Button
-          label="Sign Up"
-          className="w-full rounded-sm mt-2"
-          onClick={() => navigate("/auth/SignUp")}
+        <TextInput
+          placeholder="Confirm Password"
+          type="password"
+          {...register("password")}
         />
+        <p>{errors.confirmPassword?.message}</p>
+        <Button label="Submit" className="w-full rounded-sm mt-2" />
       </form>
     </section>
   );
 };
 
-export default Login;
+export default SignUp;
