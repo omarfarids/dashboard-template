@@ -24,8 +24,9 @@ const Login = () => {
   const navigate = useNavigate();
 
   // ------------ functions ------------
-  const onSubmit: SubmitHandler<any> = () => {
+  const onSubmit: SubmitHandler<any> = (data: any) => {
     navigate("/home");
+    console.log(data);
   };
 
   return (
