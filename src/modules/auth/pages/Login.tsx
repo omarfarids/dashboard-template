@@ -24,8 +24,9 @@ const Login = () => {
   const navigate = useNavigate();
 
   // ------------ functions ------------
-  const onSubmit: SubmitHandler<any> = () => {
+  const onSubmit: SubmitHandler<any> = (data: any) => {
     navigate("/home");
+    console.log(data);
   };
 
   return (
@@ -44,6 +45,11 @@ const Login = () => {
         />
         <p>{errors.password?.message}</p>
         <Button label="Login" className="w-full rounded-sm mt-2" />
+        <Button
+          label="Sign Up"
+          className="w-full rounded-sm mt-2"
+          onClick={() => navigate("/auth/sign-up")}
+        />
       </form>
     </section>
   );

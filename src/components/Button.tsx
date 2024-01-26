@@ -7,6 +7,7 @@ interface ButtonProps {
   disabled?: boolean;
   label?: string;
   className?: string;
+  onClick?: () => void;
 }
 
 const Button = ({
