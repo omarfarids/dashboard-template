@@ -27,4 +27,9 @@ export const NAV_ITEMS: Type_Nav_Items[] = [
     path: "/reports",
     icon: "pi pi-file",
   },
+  {
+    name: "Settings",
+    path: "/settings",
+    icon: "pi pi-file",
+  },
 ];
