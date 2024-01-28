@@ -1,4 +1,3 @@
-import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import TextInput from "@/components/TextInput"; // Adjust the import path as needed
 import Button from "@/components/Button"; // Adjust the import path as needed
@@ -6,13 +5,16 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutate } from "@/hooks/useMutate";
+import Avatar from "@/components/Avatar";
+import { useState } from "react";
 
 const SignUp = () => {
   // ------------ hooks -------------
+  const [value, setValue] = useState<any>(null);
   const { mutateAsync } = useMutate();
 
   const schema = yup.object().shape({
-    username: yup.string().required("User Name is a required field"),
+    username: yup.string().required("Username is a required field"),
     email: yup.string().email().required("Email is a required field"),
     password: yup.string().required("Password is a required field"),
     confirmPassword: yup
@@ -23,15 +25,12 @@ const SignUp = () => {
   const {
     register,
     handleSubmit,
-    setValue,
     formState: { errors },
   }: any = useForm({
     resolver: yupResolver(schema),
   });
 
   const navigate = useNavigate();
-  const [displayImages, setdisplayImages] = useState("");
-  const imageRef: any = useRef(null);
 
   // ------------ functions ------------
   const onSubmit: SubmitHandler<any> = (data: any) => {
@@ -47,15 +46,6 @@ const SignUp = () => {
         console.log(error);
       });
   };
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const fileList = e.target.files;
-    if (!fileList) return;
-
-    const display = URL.createObjectURL(fileList[0]);
-    setValue("profileImage", fileList[0]);
-    setdisplayImages(display);
-    // Optionally, you can set the image preview here using 'display'
-  };
 
   return (
     <section>
@@ -64,43 +54,7 @@ const SignUp = () => {
         className="flex flex-col gap-2 items-center"
       >
         <h1 className="text-3xl font-semibold mb-5">Sign Up</h1>
-        {displayImages.length ? (
-          <div className="avatar">
-            <div className="w-24 rounded-full">
-              <img
-                src={displayImages}
-                alt="Aavatar"
-                className="cursor-pointer"
-              />
-              <input
-                type="file"
-                id="avatar"
-                name="avatar"
-                accept="image/*"
-                {...register("profileImage")}
-                onChange={(event: any) => {
-                  handleImageChange(event);
-                }}
-              />
-            </div>
-          </div>
-        ) : (
-          <div className="avatar cursor-pointer">
-            <div className="w-24 rounded-full">
-              <input
-                ref={imageRef}
-                type="file"
-                id="avatar"
-                name="avatar"
-                accept="image/*"
-                {...register("profileImage")}
-                onChange={(event: any) => {
-                  handleImageChange(event);
-                }}
-              />
-            </div>
-          </div>
-        )}
+        <Avatar setValue={setValue} />
         <TextInput placeholder="username..." {...register("username")} />
         <p>{errors.userName?.message}</p>
         <TextInput placeholder="Email Address" {...register("email")} />
