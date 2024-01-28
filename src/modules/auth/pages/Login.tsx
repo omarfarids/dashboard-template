@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TextInput from "@/components/TextInput"; // Adjust the import path as needed
 import Button from "@/components/Button"; // Adjust the import path as needed
 import { useForm, SubmitHandler } from "react-hook-form";
@@ -62,11 +62,12 @@ const Login = () => {
         />
         <p>{errors.password?.message}</p>
         <Button label="Login" className="w-full rounded-sm mt-2" />
-        <Button
-          label="Sign Up"
-          className="w-full rounded-sm mt-2"
-          onClick={() => navigate("/auth/sign-up")}
-        />
+        <Link
+          className="underline font-semibold mt-5 text-gray hover:text-softGray"
+          to={"/auth/sign-up"}
+        >
+          Don't have an account? Sign Up
+        </Link>
       </form>
     </section>
   );
