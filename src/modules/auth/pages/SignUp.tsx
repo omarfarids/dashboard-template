@@ -5,14 +5,17 @@ import Button from "@/components/Button"; // Adjust the import path as needed
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useMutate } from "@/hooks/useMutate";
 
 const SignUp = () => {
   // ------------ hooks -------------
+  const { mutateAsync } = useMutate();
+
   const schema = yup.object().shape({
-    userName: yup.string().required("User Name is a required field"),
+    username: yup.string().required("User Name is a required field"),
     email: yup.string().email().required("Email is a required field"),
     password: yup.string().required("Password is a required field"),
-    confirmpassword: yup
+    confirmPassword: yup
       .string()
       .required("Confirm Password is a required field"),
   });
@@ -32,8 +35,17 @@ const SignUp = () => {
 
   // ------------ functions ------------
   const onSubmit: SubmitHandler<any> = (data: any) => {
-    navigate("/auth/login");
-    console.log(data);
+    mutateAsync({
+      url: "/auth/signup",
+      method: "POST",
+      body: data,
+    })
+      .then(() => {
+        navigate("/auth/login");
+      })
+      .catch((error: any) => {
+        console.log(error);
+      });
   };
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileList = e.target.files;
@@ -89,7 +101,7 @@ const SignUp = () => {
             </div>
           </div>
         )}
-        <TextInput placeholder="username..." {...register("userName")} />
+        <TextInput placeholder="username..." {...register("username")} />
         <p>{errors.userName?.message}</p>
         <TextInput placeholder="Email Address" {...register("email")} />
         <p>{errors.email?.message}</p>
@@ -102,7 +114,7 @@ const SignUp = () => {
         <TextInput
           placeholder="Confirm Password"
           type="password"
-          {...register("confirmpassword")}
+          {...register("confirmPassword")}
         />
         <p>{errors.confirmPassword?.message}</p>
         <Button label="Submit" className="w-full rounded-sm mt-2" />

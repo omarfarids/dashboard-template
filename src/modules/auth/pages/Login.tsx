@@ -1,13 +1,16 @@
-import React from "react";
 import { useNavigate } from "react-router-dom";
 import TextInput from "@/components/TextInput"; // Adjust the import path as needed
 import Button from "@/components/Button"; // Adjust the import path as needed
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useMutate } from "@/hooks/useMutate";
+import Cookies from "js-cookie";
 
 const Login = () => {
   // ------------ hooks -------------
+  const { mutateAsync } = useMutate();
+
   const schema = yup.object().shape({
     email: yup.string().email().required(),
     password: yup.string().required(),
@@ -25,8 +28,22 @@ const Login = () => {
 
   // ------------ functions ------------
   const onSubmit: SubmitHandler<any> = (data: any) => {
-    navigate("/home");
-    console.log(data);
+    mutateAsync({
+      url: "/auth/login",
+      method: "POST",
+      body: data,
+    })
+      .then((data) => {
+        Cookies.set("token", data.data.token);
+        Cookies.set("username", data.data.username);
+        Cookies.set("image", data.data.image);
+      })
+      .then(() => {
+        navigate("/");
+      })
+      .catch((error: any) => {
+        console.log(error);
+      });
   };
 
   return (

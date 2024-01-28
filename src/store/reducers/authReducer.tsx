@@ -1,16 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
 import { createSlice } from "@reduxjs/toolkit";
-
-export const { data } = useQuery({
-  queryKey: ["auth"],
-  queryFn: async () => {
-    await fetch("https://jsonplaceholder.typicode.com/todos/1", {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem("token")}`,
-      },
-    });
-  },
-});
 
 export interface authReducer {
   userAuth: any;
