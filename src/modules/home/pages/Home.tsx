@@ -1,7 +1,23 @@
-import React from "react";
+import Table from "@/components/Table";
+import { useGetData } from "@/hooks/useGetData";
+import Cookies from "js-cookie";
+
+const TITLES: any = [
+  { label: "Image", key: "image", type: "image" },
+  { label: "Restaurant", key: "username", type: "text" },
+  { label: "Email", key: "email", type: "text" },
+  { label: "Action", key: "action", type: "text" },
+];
 
 const Dashboard = () => {
-  return <div>Dashboard</div>;
+  // ------------ hooks -------------
+  const { data, isLoading, isError, refetch } = useGetData(`/user`);
+
+  return (
+    <section className="p-2 md:p-5">
+      <Table title={TITLES} data={data?.data} />
+    </section>
+  );
 };
 
 export default Dashboard;

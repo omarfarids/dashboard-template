@@ -1,5 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 export const useMutate = () => {
   const mutation = useMutation({
@@ -9,6 +10,10 @@ export const useMutate = () => {
           method,
           url: import.meta.env.VITE_BASE_URL + url,
           data: body,
+          headers: {
+            Authorization: `Bearer ${Cookies.get("token")}`,
+            "Content-Type": "multipart/form-data",
+          },
         });
         return response.data;
       } catch (error: any) {
