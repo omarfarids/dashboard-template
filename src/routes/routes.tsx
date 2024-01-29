@@ -1,14 +1,15 @@
 import { createBrowserRouter } from "react-router-dom";
 import Auth from "@/layouts/auth/Index.tsx";
-import Dashboard from "@/layouts/dashboard/Index";
 import authRoutes from "@/modules/auth/routes";
 import dashboardRoutes from "@/modules/home/routes";
+import settingsRoutes from "@/modules/user/routes";
+import AuthGuard from "@/auth/AuthGuard";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Dashboard />,
-    children: [...dashboardRoutes],
+    element: <AuthGuard />,
+    children: [...dashboardRoutes, ...settingsRoutes],
   },
   {
     path: "auth",

@@ -37,9 +37,10 @@ const Login = () => {
         Cookies.set("token", data.data.token);
         Cookies.set("username", data.data.username);
         Cookies.set("image", data.data.image);
+        Cookies.set("userId", data.data.id);
       })
       .then(() => {
-        navigate("/");
+        navigate("/home");
       })
       .catch((error: any) => {
         console.log(error);

@@ -11,6 +11,7 @@ import { useState } from "react";
 const SignUp = () => {
   // ------------ hooks -------------
   const [value, setValue] = useState<any>(null);
+  const [displayImages, setdisplayImages] = useState<any>(null);
   const { mutateAsync } = useMutate();
 
   const schema = yup.object().shape({
@@ -37,7 +38,7 @@ const SignUp = () => {
     mutateAsync({
       url: "/auth/signup",
       method: "POST",
-      body: data,
+      body: { ...data, image: value },
     })
       .then(() => {
         navigate("/auth/login");
@@ -54,9 +55,13 @@ const SignUp = () => {
         className="flex flex-col gap-2 items-center"
       >
         <h1 className="text-3xl font-semibold mb-5">Sign Up</h1>
-        <Avatar setValue={setValue} />
+        <Avatar
+          displayImages={displayImages}
+          setDisplayImages={setdisplayImages}
+          setValue={setValue}
+        />
         <TextInput placeholder="username..." {...register("username")} />
-        <p>{errors.userName?.message}</p>
+        <p>{errors.username?.message}</p>
         <TextInput placeholder="Email Address" {...register("email")} />
         <p>{errors.email?.message}</p>
         <TextInput

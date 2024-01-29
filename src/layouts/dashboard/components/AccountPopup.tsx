@@ -1,4 +1,4 @@
-import React from "react";
+import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
 
 const Dropdown = () => {
@@ -35,7 +35,9 @@ const Dropdown = () => {
         </li>
         <hr />
         <li className="pt-1">
-          <Link to="/auth/login">Logout</Link>
+          <Link to="/auth/login" onClick={() => Cookies.remove("token")}>
+            Logout
+          </Link>
         </li>
       </ul>
     </div>

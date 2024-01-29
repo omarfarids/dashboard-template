@@ -1,18 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 export const useGetData = (url: string) => {
-  const { data, isLoading, error } = useQuery<any>({
+  const { data, isLoading, error, refetch } = useQuery<any>({
     queryKey: ["repoData"],
     queryFn: async () => {
-      const response = await axios.get(import.meta.env.BASE_URL + url, {
+      const response = await axios.get(import.meta.env.VITE_BASE_URL + url, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${Cookies.get("token")}`,
         },
       });
       return response.data;
     },
+    retry: 3,
   });
 
-  return { data, isLoading, error };
+  return { data, isLoading, error, refetch };
 };

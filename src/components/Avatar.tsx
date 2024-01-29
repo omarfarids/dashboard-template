@@ -1,14 +1,15 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import user from "@/assets/user.png";
 import CameraAltIcon from "@mui/icons-material/CameraAlt";
 
 interface AvatarProps {
   setValue: any;
+  displayImages: any;
+  setDisplayImages: any;
 }
 
-const Avatar = ({ setValue }: AvatarProps) => {
+const Avatar = ({ setValue, displayImages, setDisplayImages }: AvatarProps) => {
   // ------------- hooks ------------
-  const [displayImages, setdisplayImages] = useState<any>(null);
   const imageRef: any = useRef(null);
 
   // ------------ function --------------
@@ -19,7 +20,7 @@ const Avatar = ({ setValue }: AvatarProps) => {
     const display = URL.createObjectURL(fileList[0]);
 
     setValue(fileList[0]);
-    setdisplayImages(display);
+    setDisplayImages(display);
   };
 
   return (
