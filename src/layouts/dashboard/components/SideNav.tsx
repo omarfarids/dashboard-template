@@ -12,16 +12,16 @@ const Sidebar = ({ navItems }: { navItems: Type_Nav_Items[] }) => {
 
   return (
     <>
-      <div
+      {/* <div
         className="absolute flex justify-center items-center top-3 left-5 cursor-pointer w-8 h-8 rounded-full hover:bg-soft-gray z-20 md:hidden"
         onClick={toggleSideBar}
       >
         <i className="pi pi-bars"></i>
-      </div>
+      </div> */}
       <div
         className={`${
           isSideBarOpen ? "w-[350px]" : "w-0"
-        } bg-white md:w-[350px] h-screen md:shadow-lg shadow-2xl overflow-hidden z-10 absolute md:relative transition-all`}
+        } bg-white md:w-1/5 h-screen md:shadow-lg shadow-2xl overflow-hidden z-10 absolute md:relative transition-all`}
       >
         <div className="p-10">
           {/* <img src={logoSrc} className="md:w-[150px]" alt="box bank" /> */}

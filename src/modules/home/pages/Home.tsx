@@ -1,6 +1,5 @@
 import Table from "@/components/Table";
 import { useGetData } from "@/hooks/useGetData";
-import Cookies from "js-cookie";
 
 const TITLES: any = [
   { label: "Image", key: "image", type: "image" },
@@ -11,7 +10,7 @@ const TITLES: any = [
 
 const Dashboard = () => {
   // ------------ hooks -------------
-  const { data, isLoading, isError, refetch } = useGetData(`/user`);
+  const { data, refetch } = useGetData(`/user`);
 
   return (
     <section className="p-2 md:p-5">
