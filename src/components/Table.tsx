@@ -18,28 +18,31 @@ const Table = ({ title, data }: TableDataProps) => {
             </tr>
           </thead>
           <tbody>
-            {data?.map((item: any) => {
-              return (
-                <tr>
-                  {title.map((x: any) => {
-                    return (
-                      <td className="py-3 px-4">
-                        {" "}
-                        {x?.type === "image" ? (
-                          <img
-                            className="w-8"
-                            src={item?.[x?.key]?.length ? item?.[x?.key] : user}
-                            alt="avatar"
-                          />
-                        ) : (
-                          item?.[x?.key] || "-"
-                        )}
-                      </td>
-                    );
-                  })}
-                </tr>
-              );
-            })}
+            {Array.isArray(data) &&
+              data?.map((item: any) => {
+                return (
+                  <tr>
+                    {title.map((x: any) => {
+                      return (
+                        <td className="py-3 px-4">
+                          {" "}
+                          {x?.type === "image" ? (
+                            <img
+                              className="w-8"
+                              src={
+                                item?.[x?.key]?.length ? item?.[x?.key] : user
+                              }
+                              alt="avatar"
+                            />
+                          ) : (
+                            item?.[x?.key] || "-"
+                          )}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
           </tbody>
         </table>
       </div>
