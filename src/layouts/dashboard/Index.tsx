@@ -7,9 +7,9 @@ import { Outlet } from "react-router-dom";
 const MainLayout = () => {
   return (
     <main className="bg-secondary-100 h-screen">
-      <div className="flex flex-row">
+      <div className="flex flex-row ">
         <SideNav navItems={NAV_ITEMS} />
-        <div className="w-full">
+        <div className="w-full md:w-4/5">
           <Header />
           <Outlet />
         </div>
