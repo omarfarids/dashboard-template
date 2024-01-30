@@ -1,5 +1,4 @@
 import TextInput from "@/components/TextInput";
-import { useNavigate } from "react-router-dom";
 import Button from "@/components/Button"; // Adjust the import path as needed
 import { useForm, SubmitHandler } from "react-hook-form";
 import * as yup from "yup";
@@ -15,9 +14,7 @@ const Settings = () => {
   const [image, setImage] = useState<any>(null);
   const { mutateAsync } = useMutate();
   const [displayImages, setdisplayImages] = useState<any>(null);
-  const { data, isLoading, isError, refetch } = useGetData(
-    `/user/${Cookies.get("userId")}`
-  );
+  const { data, refetch } = useGetData(`/user/${Cookies.get("userId")}`);
 
   const schema = yup.object().shape({
     username: yup.string().required("Username is a required field"),
@@ -58,11 +55,11 @@ const Settings = () => {
   }, [data]);
 
   return (
-    <section className="p-2 md:p-5">
+    <section className="p-2 md:px-5 w-full">
       <p className="text-2xl font-semibold">Update your profile</p>
       <form
         onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-5 items-center w-full mt-5"
+        className="flex flex-col gap-5 items-center mt-5"
       >
         <Avatar
           displayImages={displayImages}
@@ -70,11 +67,11 @@ const Settings = () => {
           setValue={setImage}
         />
         <p className=" font-semibold">Upload new avatar</p>
-        <p className="underline text-gray cursor-pointer pb-10 font-semibold">
+        <p className="underline text-gray cursor-pointer pb-5 font-semibold">
           Update your password?
         </p>
 
-        <div className="flex flex-col md:flex-row items-start gap-2">
+        <div className="flex flex-col items-start gap-2">
           <div>
             <TextInput placeholder="username..." {...register("username")} />
             <p>{errors.username?.message}</p>
