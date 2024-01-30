@@ -18,8 +18,8 @@ export const NAV_ITEMS: Type_Nav_Items[] = [
     icon: "pi pi-users",
   },
   {
-    name: "Transactions",
-    path: "/transactions",
+    name: "Categories",
+    path: "/categories",
     icon: "pi pi-arrow-right-arrow-left",
   },
   {
