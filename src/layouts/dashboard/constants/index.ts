@@ -16,7 +16,7 @@ export const NAV_ITEMS: Type_Nav_Items[] = [
   },
   {
     name: "Products",
-    path: "/products",
+    path: "/Products",
     icon: "pi pi-users",
     role: "all",
   },
