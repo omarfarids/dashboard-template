@@ -10,7 +10,7 @@ export const NAV_ITEMS: Type_Nav_Items[] = [
   },
   {
     name: "Categories",
-    path: "/category",
+    path: "/Category",
     icon: "pi pi-users",
     role: "user",
   },
@@ -23,7 +23,7 @@ export const NAV_ITEMS: Type_Nav_Items[] = [
 
   {
     name: "Settings",
-    path: "/settings",
+    path: "/Settings",
     icon: "pi pi-file",
     role: "all",
   },

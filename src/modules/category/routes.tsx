@@ -1,7 +1,7 @@
 import Category from "./page/category";
 export default [
   {
-    path: "category",
+    path: "Category",
     element: <Category />,
     name: "Categories",
   },
