@@ -6,10 +6,15 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutate } from "@/hooks/useMutate";
 import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
+import { registerUser } from "@/store/reducers/globalReducer";
+import { NAV_ITEMS } from "@/layouts/dashboard/constants";
 
 const Login = () => {
   // ------------ hooks -------------
   const { mutateAsync } = useMutate();
+
+  const dispatch = useDispatch();
 
   const schema = yup.object().shape({
     email: yup.string().email().required(),
@@ -38,9 +43,16 @@ const Login = () => {
         Cookies.set("username", data.data.username);
         Cookies.set("image", data.data.image);
         Cookies.set("userId", data.data.id);
+        Cookies.set("role", data.data.role);
       })
       .then(() => {
-        navigate("/home");
+        dispatch(registerUser());
+      })
+      .then(() => {
+        const permittedRoute = NAV_ITEMS.find((route) => {
+          return route.role === "all" || route.role === Cookies.get("role");
+        });
+        navigate(permittedRoute?.path || "/home");
       })
       .catch((error: any) => {
         console.log(error);
