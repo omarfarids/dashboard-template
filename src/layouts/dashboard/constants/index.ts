@@ -20,16 +20,7 @@ export const NAV_ITEMS: Type_Nav_Items[] = [
     icon: "pi pi-users",
     role: "all",
   },
-  {
-    name: "Categories",
-    path: "/categories",
-    icon: "pi pi-arrow-right-arrow-left",
-  },
-  {
-    name: "Reports",
-    path: "/reports",
-    icon: "pi pi-file",
-  },
+
   {
     name: "Settings",
     path: "/settings",
