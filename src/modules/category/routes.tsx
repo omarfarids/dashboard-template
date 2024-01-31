@@ -1,7 +1,7 @@
-import Category from "./category";
+import Category from "./page/category";
 export default [
   {
-    path: "categories",
+    path: "category",
     element: <Category />,
     name: "Categories",
   },

@@ -22,7 +22,7 @@ const Button = ({
   return (
     <button
       type="submit"
-      className={`btn btn-primary sm:w-[450px] bg-primary-500 w-full relative capitalize text-base ${className} ${
+      className={`btn btn-primary bg-primary-500 w-full relative capitalize text-base ${className} ${
         icon ? "justify-start" : ""
       }`}
       disabled={isLoading || disabled}
