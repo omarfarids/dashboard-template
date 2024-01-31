@@ -10,7 +10,7 @@ const TITLES: any = [
 
 const Dashboard = () => {
   // ------------ hooks -------------
-  const { data, refetch } = useGetData(`/user`);
+  const { data } = useGetData(`/user`);
 
   return (
     <section className="p-2 md:p-5">
