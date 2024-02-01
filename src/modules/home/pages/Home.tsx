@@ -5,7 +5,6 @@ const TITLES: any = [
   { label: "Image", key: "image", type: "image" },
   { label: "Restaurant", key: "username", type: "text" },
   { label: "Email", key: "email", type: "text" },
-  { label: "Action", key: "action", type: "text" },
 ];
 
 const Dashboard = () => {

@@ -1,4 +1,3 @@
-import React from "react";
 import Header from "./components/Header"; // Adjust the path based on your project structure
 import SideNav from "./components/SideNav"; // Adjust the path based on your project structure
 import { NAV_ITEMS } from "./constants"; // Adjust the path based on your project structure
