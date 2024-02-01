@@ -24,7 +24,7 @@ const TITLES: any = [
 
 const Products = () => {
   // ------------ hooks -------------
-  const globalState = useSelector((state: any) => state.global);
+  // const globalState = useSelector((state: any) => state.global);
   const param = useParams();
 
   const { data } = useGetData(`/product/${param.categoryId}`);

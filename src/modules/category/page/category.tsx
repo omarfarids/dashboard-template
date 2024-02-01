@@ -10,7 +10,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import TextInput from "@/components/TextInput";
 import Avatar from "@/components/Avatar";
 import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const TITLES: any = [
   { label: "Image", key: "image", type: "image" },
@@ -22,8 +22,8 @@ const TITLES: any = [
 
 const Category = () => {
   // ------------ hooks -------------
+  const param = useParams();
   const globalState = useSelector((state: any) => state.global);
-
   const { data } = useGetData(`/category/${globalState?.user?.userId}`);
   const [value, setValue] = useState<any>(null);
   const [displayImages, setdisplayImages] = useState<any>(null);
@@ -34,7 +34,6 @@ const Category = () => {
     name: yup.string().required("Name is a required field"),
     description: yup.string().required("Description is a required field"),
   });
-
   const {
     register,
     handleSubmit,
@@ -42,7 +41,21 @@ const Category = () => {
   }: any = useForm({
     resolver: yupResolver(schema),
   });
-
+  console.log(data);
+  const onDelete: SubmitHandler<any> = (data: any) => {
+    data = { ...data, categoryId: data?.[0]?._id };
+    mutateAsync({
+      url: `/category/${data?.[0]?._id}`,
+      method: "DELETE",
+    })
+      .then(() => {
+        navigate("/category");
+      })
+      .catch((error: any) => {
+        console.log(error);
+      });
+    console.log(data);
+  };
   const onSubmit: SubmitHandler<any> = (data: any) => {
     mutateAsync({
       url: "/category",
@@ -93,7 +106,13 @@ const Category = () => {
           </div>
         </ModalWrapper>
       </div>
-      <Table title={TITLES} data={data?.data} isNavigatable={true} />
+      <Table
+        title={TITLES}
+        data={data?.data}
+        isNavigatable={true}
+        hasActions={true}
+        onDelete={onDelete}
+      />
     </section>
   );
 };
