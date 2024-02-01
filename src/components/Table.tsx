@@ -1,11 +1,23 @@
 import user from "@/assets/user.png";
-
+import { useNavigate } from "react-router-dom";
 type TableDataProps = {
   title: { label: string; key: string }[];
   data: any[];
+  hasActions?: boolean;
+  onEdit?: any;
+  onDelete?: any;
+  isNavigatable?: boolean;
 };
-
-const Table = ({ title, data }: TableDataProps) => {
+// eslint-disable-next-line react-hooks/rules-of-hooks
+const Table = ({
+  title,
+  data,
+  hasActions = false,
+  onEdit = null,
+  onDelete = null,
+  isNavigatable = false,
+}: TableDataProps) => {
+  const navigate = useNavigate();
   return (
     <div className="border border-[#091E4224] rounded-lg shadow-md ">
       <div className="overflow-x-auto">
@@ -13,18 +25,31 @@ const Table = ({ title, data }: TableDataProps) => {
           <thead className="bg-lightGray">
             <tr>
               {title?.map((item: any) => {
-                return <th className="py-3 text-lg">{item?.label}</th>;
+                return (
+                  <th key={Math.random()} className="py-3 text-lg">
+                    {item?.label}
+                  </th>
+                );
               })}
+              {hasActions && <th className="py-3 text-lg">Actions</th>}
             </tr>
           </thead>
           <tbody>
             {Array.isArray(data) &&
               data?.map((item: any) => {
                 return (
-                  <tr>
+                  <tr key={Math.random()}>
                     {title.map((x: any) => {
                       return (
-                        <td className="py-3 px-4">
+                        <td
+                          key={Math.random()}
+                          onClick={() => {
+                            if (isNavigatable) {
+                              navigate(`/product/${item._id}`);
+                            }
+                          }}
+                          className="py-3 px-4 "
+                        >
                           {" "}
                           {x?.type === "image" ? (
                             <img
@@ -40,6 +65,23 @@ const Table = ({ title, data }: TableDataProps) => {
                         </td>
                       );
                     })}
+                    {hasActions && (
+                      <td className="py-3 px-4 flex flex-row gap-2">
+                        {onEdit ?? (
+                          <button onClick={onEdit} className="btn">
+                            Edit
+                          </button>
+                        )}
+                        {onEdit ?? (
+                          <button
+                            onClick={onDelete}
+                            className="btn btn-outline btn-error"
+                          >
+                            Delete
+                          </button>
+                        )}
+                      </td>
+                    )}
                   </tr>
                 );
               })}

@@ -1,7 +1,7 @@
 import Products from "./pages/product";
 export default [
   {
-    path: "Products",
+    path: "/product/:categoryId",
     element: <Products />,
     name: "Products",
   },

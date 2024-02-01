@@ -10,22 +10,24 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import TextInput from "@/components/TextInput";
 import Avatar from "@/components/Avatar";
 import * as yup from "yup";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const TITLES: any = [
-  { label: "Image", key: "image", type: "image" },
   { label: "Name", key: "name", type: "text" },
+  { label: "Image", key: "image", type: "image" },
   { label: "Description", key: "description", type: "text" },
   { label: "Created at", key: "create_at", type: "text" },
   { label: "Update at", key: "update_at", type: "text" },
+  { label: "Price", key: "price", type: "text" },
   { label: "Action", key: "action", type: "text" },
 ];
 
 const Products = () => {
   // ------------ hooks -------------
   const globalState = useSelector((state: any) => state.global);
+  const param = useParams();
 
-  const { data } = useGetData(`/category/${globalState?.user?.userId}`);
+  const { data } = useGetData(`/product/${param.categoryId}`);
   const [value, setValue] = useState<any>(null);
   const [displayImages, setdisplayImages] = useState<any>(null);
   const { mutateAsync } = useMutate();
@@ -34,6 +36,7 @@ const Products = () => {
   const schema = yup.object().shape({
     name: yup.string().required("Name is a required field"),
     description: yup.string().required("Description is a required field"),
+    price: yup.string().required("Price is a required field"),
   });
 
   const {
@@ -46,9 +49,9 @@ const Products = () => {
 
   const onSubmit: SubmitHandler<any> = (data: any) => {
     mutateAsync({
-      url: "/category",
+      url: "/product",
       method: "POST",
-      body: { ...data, image: value, userId: globalState?.user?.userId },
+      body: { ...data, image: value, categoryId: param.categoryId },
     })
       .then(() => {
         navigate("/category");
@@ -57,7 +60,7 @@ const Products = () => {
         console.log(error);
       });
   };
-  console.log(globalState?.user?.userId);
+  console.log(param);
 
   return (
     <section className="p-2 md:p-5">
@@ -67,7 +70,7 @@ const Products = () => {
             <Button
               onClick={onClick}
               className="w-56"
-              label="Create New Category"
+              label="Create New Prodect"
             />
           )}
         >
@@ -86,6 +89,12 @@ const Products = () => {
               />
               <TextInput placeholder="Prodect name" {...register("name")} />
               <p>{errors.name?.message}</p>
+              <TextInput
+                placeholder="Price"
+                className="w-full sm:w-[100px] input input-bordered"
+                {...register("price")}
+              />
+              <p>{errors.price?.message}</p>
               <textarea
                 className="textarea textarea-bordered h-24 w-full sm:w-[450px]"
                 placeholder="Description..."

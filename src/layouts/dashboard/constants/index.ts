@@ -10,13 +10,13 @@ export const NAV_ITEMS: Type_Nav_Items[] = [
   },
   {
     name: "Categories",
-    path: "/Category",
+    path: "/category",
     icon: "pi pi-users",
     role: "user",
   },
   {
     name: "Products",
-    path: "/Products",
+    path: "/product",
     icon: "pi pi-users",
     role: "all",
   },

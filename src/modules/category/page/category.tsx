@@ -18,7 +18,6 @@ const TITLES: any = [
   { label: "Description", key: "description", type: "text" },
   { label: "Created at", key: "create_at", type: "text" },
   { label: "Update at", key: "update_at", type: "text" },
-  { label: "Action", key: "action", type: "text" },
 ];
 
 const Category = () => {
@@ -60,15 +59,11 @@ const Category = () => {
   console.log(globalState?.user?.userId);
 
   return (
-    <section className="p-2 md:p-5">
-      <div className="flex justify-end mb-5">
+    <section className="p-2 md:p-5 flex flex-col">
+      <div className="my-5 w-72 self-end">
         <ModalWrapper
           button={({ onClick }: any) => (
-            <Button
-              onClick={onClick}
-              className="w-56"
-              label="Create New Category"
-            />
+            <Button onClick={onClick} label="Create New Category" />
           )}
         >
           <div>
@@ -98,7 +93,7 @@ const Category = () => {
           </div>
         </ModalWrapper>
       </div>
-      <Table title={TITLES} data={data?.data} />
+      <Table title={TITLES} data={data?.data} isNavigatable={true} />
     </section>
   );
 };
