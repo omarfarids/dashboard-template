@@ -1,5 +1,3 @@
-import React from "react";
-// import { ToggleTheme } from "@/components"; // Uncomment this line when ToggleTheme component is available
 import { Outlet } from "react-router-dom";
 
 const App = () => {
