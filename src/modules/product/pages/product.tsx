@@ -12,20 +12,22 @@ import Avatar from "@/components/Avatar";
 import * as yup from "yup";
 import { useNavigate, useParams } from "react-router-dom";
 
-
 const TITLES: any = [
-  { label: "Image", key: "image", type: "image" },
   { label: "Name", key: "name", type: "text" },
+  { label: "Image", key: "image", type: "image" },
   { label: "Description", key: "description", type: "text" },
   { label: "Created at", key: "create_at", type: "text" },
   { label: "Update at", key: "update_at", type: "text" },
+  { label: "Price", key: "price", type: "text" },
+  { label: "Action", key: "action", type: "text" },
 ];
 
-const Category = () => {
+const Products = () => {
   // ------------ hooks -------------
+  // const globalState = useSelector((state: any) => state.global);
   const param = useParams();
-  const globalState = useSelector((state: any) => state.global);
-  const { data } = useGetData(`/category/${globalState?.user?.userId}`);
+
+  const { data } = useGetData(`/product/${param.categoryId}`);
   const [value, setValue] = useState<any>(null);
   const [displayImages, setdisplayImages] = useState<any>(null);
   const { mutateAsync } = useMutate();
@@ -34,6 +36,7 @@ const Category = () => {
   const schema = yup.object().shape({
     name: yup.string().required("Name is a required field"),
     description: yup.string().required("Description is a required field"),
+    price: yup.string().required("Price is a required field"),
   });
 
   const {
@@ -43,27 +46,12 @@ const Category = () => {
   }: any = useForm({
     resolver: yupResolver(schema),
   });
-  console.log(data);
-  const onDelete: SubmitHandler<any> = (data: any) => {
-    data = { ...data, categoryId: data?.[0]?._id };
-    mutateAsync({
-      url: `/category/${data?.[0]?._id}`,
-      method: "DELETE",
-    })
-      .then(() => {
-        navigate("/category");
-      })
-      .catch((error: any) => {
-        console.log(error);
-      });
-    console.log(data);
-  };
 
   const onSubmit: SubmitHandler<any> = (data: any) => {
     mutateAsync({
-      url: "/category",
+      url: "/product",
       method: "POST",
-      body: { ...data, image: value, userId: globalState?.user?.userId },
+      body: { ...data, image: value, categoryId: param.categoryId },
     })
       .then(() => {
         navigate("/category");
@@ -72,19 +60,18 @@ const Category = () => {
         console.log(error);
       });
   };
-  console.log(globalState?.user?.userId);
+  console.log(param);
 
   return (
-    <section className="p-2 md:p-5 flex flex-col">
-      <div className="my-5 w-72 self-end">
+    <section className="p-2 md:p-5">
+      <div className="flex justify-end mb-5">
         <ModalWrapper
           button={({ onClick }: any) => (
             <Button
               onClick={onClick}
               className="w-56"
-              label="Create New Category"
+              label="Create New Prodect"
             />
-
           )}
         >
           <div>
@@ -102,6 +89,12 @@ const Category = () => {
               />
               <TextInput placeholder="Prodect name" {...register("name")} />
               <p>{errors.name?.message}</p>
+              <TextInput
+                placeholder="Price"
+                className="w-full sm:w-[100px] input input-bordered"
+                {...register("price")}
+              />
+              <p>{errors.price?.message}</p>
               <textarea
                 className="textarea textarea-bordered h-24 w-full sm:w-[450px]"
                 placeholder="Description..."
@@ -114,15 +107,9 @@ const Category = () => {
           </div>
         </ModalWrapper>
       </div>
-      <Table
-        title={TITLES}
-        data={data?.data}
-        isNavigatable={true}
-        hasActions={true}
-        onDelete={onDelete}
-      />
+      <Table title={TITLES} data={data?.data} />
     </section>
   );
 };
 
-export default Category;
+export default Products;
