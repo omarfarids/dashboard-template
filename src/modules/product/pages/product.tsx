@@ -1,7 +1,6 @@
 import Table from "@/components/Table";
 import { useGetData } from "@/hooks/useGetData";
 import Button from "@/components/Button";
-import { useSelector } from "react-redux";
 import ModalWrapper from "@/components/ModalWrapper";
 import { useState } from "react";
 import { useMutate } from "@/hooks/useMutate";
@@ -23,8 +22,7 @@ const TITLES: any = [
 ];
 
 const Products = () => {
-  // ------------ hooks -------------
-  // const globalState = useSelector((state: any) => state.global);
+  // ------------ hooks ---------------
   const param = useParams();
 
   const { data } = useGetData(`/product/${param.categoryId}`);

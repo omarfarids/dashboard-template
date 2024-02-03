@@ -38,14 +38,17 @@ const Table = ({
             {Array.isArray(data) &&
               data?.map((item: any) => {
                 return (
-                  <tr key={Math.random()}>
+                  <tr
+                    key={Math.random()}
+                    className="cursor-pointer hover:bg-softGray"
+                  >
                     {title.map((x: any) => {
                       return (
                         <td
                           key={Math.random()}
                           onClick={() => {
                             if (isNavigatable) {
-                              navigate(`/product/${item._id}`);
+                              navigate(`${item._id}`);
                             }
                           }}
                           className="py-3 px-4 "
