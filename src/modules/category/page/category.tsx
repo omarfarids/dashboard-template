@@ -12,6 +12,7 @@ import Avatar from "@/components/Avatar";
 import * as yup from "yup";
 import { useNavigate, useParams } from "react-router-dom";
 
+
 const TITLES: any = [
   { label: "Image", key: "image", type: "image" },
   { label: "Name", key: "name", type: "text" },
@@ -34,6 +35,7 @@ const Category = () => {
     name: yup.string().required("Name is a required field"),
     description: yup.string().required("Description is a required field"),
   });
+
   const {
     register,
     handleSubmit,
@@ -56,6 +58,7 @@ const Category = () => {
       });
     console.log(data);
   };
+
   const onSubmit: SubmitHandler<any> = (data: any) => {
     mutateAsync({
       url: "/category",
@@ -76,7 +79,12 @@ const Category = () => {
       <div className="my-5 w-72 self-end">
         <ModalWrapper
           button={({ onClick }: any) => (
-            <Button onClick={onClick} label="Create New Category" />
+            <Button
+              onClick={onClick}
+              className="w-56"
+              label="Create New Category"
+            />
+
           )}
         >
           <div>

@@ -1,4 +1,3 @@
-import React from "react";
 import AccountPopup from "./AccountPopup";
 import { useLocation } from "react-router-dom";
 
