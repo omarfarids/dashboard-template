@@ -8,7 +8,6 @@ type TableDataProps = {
   onDelete?: any;
   isNavigatable?: boolean;
 };
-// eslint-disable-next-line react-hooks/rules-of-hooks
 const Table = ({
   title,
   data,
@@ -77,7 +76,7 @@ const Table = ({
                         )}
                         {onEdit ?? (
                           <button
-                            onClick={onDelete}
+                            onClick={() => onDelete(item)}
                             className="btn btn-outline btn-error"
                           >
                             Delete
