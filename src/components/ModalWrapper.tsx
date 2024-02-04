@@ -1,22 +1,32 @@
+import { useEffect } from "react";
+
 interface ModalWrapperProps {
-  button: any;
   children: React.ReactNode;
+  openModal: boolean;
+  handleClose?: () => void;
 }
-const ModalWrapper = ({ button: Button, children }: ModalWrapperProps) => {
+const ModalWrapper = ({
+  openModal,
+  children,
+  handleClose,
+}: ModalWrapperProps) => {
+  useEffect(() => {
+    if (openModal) {
+      (document.getElementById("my_modal_3") as HTMLDialogElement)?.showModal();
+    } else {
+      (document.getElementById("my_modal_3") as HTMLDialogElement)?.close();
+    }
+  }, [openModal]);
+
   return (
     <>
-      <Button
-        onClick={() =>
-          (
-            document.getElementById("my_modal_3") as HTMLDialogElement
-          )?.showModal()
-        }
-      />
-
       <dialog id="my_modal_3" className="modal">
         <div className="modal-box">
           <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+            <button
+              onClick={handleClose}
+              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+            >
               ✕
             </button>
           </form>

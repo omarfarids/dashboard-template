@@ -1,5 +1,5 @@
-import Category from "./page/Category";
-import Product from "./page/Product";
+import Category from "./pages/Category";
+import Product from "./pages/Product";
 export default [
   {
     path: "category",
