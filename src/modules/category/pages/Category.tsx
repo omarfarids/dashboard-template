@@ -35,7 +35,7 @@ const Category = () => {
     name: yup.string().required("Name is a required field"),
     description: yup.string().required("Description is a required field"),
   });
-
+  const categoryId = data?.data?.[0]?._id;
   // -------------- functions ----------------
   const handleOpen = () => {
     setOpenModal(true);
@@ -52,9 +52,9 @@ const Category = () => {
   }: any = useForm({
     resolver: yupResolver(schema),
   });
-  const onDelete: SubmitHandler<any> = (data: any) => {
+  const onDelete: SubmitHandler<any> = () => {
     mutateAsync({
-      url: `/category/${data?._id}`,
+      url: `/category/${categoryId}`,
       method: "DELETE",
     })
       .then(() => {
