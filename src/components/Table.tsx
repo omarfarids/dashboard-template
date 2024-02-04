@@ -1,19 +1,23 @@
 import user from "@/assets/user.png";
+import { useNavigate } from "react-router-dom";
 type TableDataProps = {
   title: { label: string; key: string }[];
   data: any[];
   hasActions?: boolean;
   onEdit?: any;
   onDelete?: any;
+  isNavigatable?: boolean;
 };
-
+// eslint-disable-next-line react-hooks/rules-of-hooks
 const Table = ({
   title,
   data,
   hasActions = false,
   onEdit = null,
   onDelete = null,
+  isNavigatable = false,
 }: TableDataProps) => {
+  const navigate = useNavigate();
   return (
     <div className="border border-[#091E4224] rounded-lg shadow-md ">
       <div className="overflow-x-auto">
@@ -34,10 +38,21 @@ const Table = ({
             {Array.isArray(data) &&
               data?.map((item: any) => {
                 return (
-                  <tr key={Math.random()}>
+                  <tr
+                    key={Math.random()}
+                    className="cursor-pointer hover:bg-softGray"
+                  >
                     {title.map((x: any) => {
                       return (
-                        <td key={Math.random()}>
+                        <td
+                          key={Math.random()}
+                          onClick={() => {
+                            if (isNavigatable) {
+                              navigate(`${item._id}`);
+                            }
+                          }}
+                          className="py-3 px-4 "
+                        >
                           {" "}
                           {x?.type === "image" ? (
                             <img

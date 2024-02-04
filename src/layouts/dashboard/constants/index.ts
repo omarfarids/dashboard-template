@@ -14,12 +14,12 @@ export const NAV_ITEMS: Type_Nav_Items[] = [
     icon: "pi pi-users",
     role: "user",
   },
-  {
-    name: "Products",
-    path: "/products",
-    icon: "pi pi-users",
-    role: "all",
-  },
+  // {
+  //   name: "Products",
+  //   path: "/product",
+  //   icon: "pi pi-users",
+  //   role: "all",
+  // },
 
   {
     name: "Settings",
