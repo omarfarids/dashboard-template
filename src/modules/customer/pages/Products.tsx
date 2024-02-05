@@ -1,9 +1,19 @@
+import { useGetData } from "@/hooks/useGetData";
+import { setCartItems } from "@/store/reducers/cartReducer";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import dammyProduct from "@/assets/product.webp";
 
 const Products = () => {
-  const [addCar, setAddCar] = useState(true);
+  // ------------- hooks -------------
   const navigate = useNavigate();
+  const { categoryId } = useParams();
+  const { data } = useGetData(`/customer/product/${categoryId}`);
+  const cartItems = useSelector((state: any) => state?.cart?.cartItems);
+  const dispatch = useDispatch();
+  const [itemIDs, setItemIDs] = useState<any>([]);
+
   return (
     <div
       style={{
@@ -21,7 +31,7 @@ const Products = () => {
       >
         <button
           className="btn btn-primary w-fit"
-          onClick={() => navigate(`orders`)}
+          onClick={() => navigate(`/customer/orders`)}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -53,77 +63,86 @@ const Products = () => {
           </div>
         </div>
       </div>
-      <div>
-        <div className=" flex flex-wrap justify-around gap-5 mt-5  ">
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18].map(
-            () => (
-              <div
-                className="card card-compact w-96 bg-base-100 shadow-xl hover:opacity-80 "
-                //   onClick={() => {
-                //     navigate(`product`);
-                //   }}
-              >
-                <figure>
-                  <img
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoPhgVJ_EdConWcowWxq3cZ9_3MxZMpxcn6A&usqp=CAU"
-                    alt="Food"
-                  />
-                </figure>
-                <div className="card-body">
-                  <h2 className="card-title">Food</h2>
-                  <p>Price :</p>
+      <div className="min-h-screen">
+        <div className="flex flex-row flex-wrap justify-start gap-5 m-5  ">
+          {data?.data?.map((item: any) => (
+            <div
+              key={item?._id}
+              className="card card-compact w-96 bg-base-100 shadow-xl hover:opacity-80 cursor-pointer"
+            >
+              <figure>
+                <img
+                  src={item?.image?.length ? item?.image : dammyProduct}
+                  alt="Food"
+                  className="h-720"
+                />
+              </figure>
+              <div className="card-body">
+                <h2 className="card-title">{item?.name}</h2>
+                <p>Price : {item?.price}</p>
 
-                  <div className="card-actions justify-end"></div>
+                <div className="card-actions justify-end"></div>
 
-                  {addCar ? (
-                    <button
-                      className="btn btn-primary w-fit"
-                      onClick={() => {
-                        setAddCar((prev) => !prev);
-                      }}
+                {!itemIDs?.includes(item?._id) ? (
+                  <button
+                    className="btn btn-primary w-fit"
+                    onClick={() => {
+                      dispatch(
+                        setCartItems([...cartItems, { ...item, quantity: 1 }])
+                      );
+                      setItemIDs((prev: any) => [...prev, item?._id]);
+                    }}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="w-6 h-6"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
-                        />
-                      </svg>
-                    </button>
-                  ) : (
-                    <button
-                      className="btn btn-success w-fit"
-                      onClick={() => {
-                        setAddCar((prev) => !prev);
-                      }}
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z"
+                      />
+                    </svg>
+                  </button>
+                ) : (
+                  <button
+                    className="btn btn-success w-fit"
+                    onClick={() => {
+                      dispatch(
+                        setCartItems(
+                          cartItems?.filter(
+                            (item: any) => item?._id !== item?._id
+                          )
+                        )
+                      );
+                      setItemIDs((prev: any) =>
+                        prev?.filter((i: any) => i !== item?._id)
+                      );
+                    }}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="w-6 h-6"
                     >
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        strokeWidth={1.5}
-                        stroke="currentColor"
-                        className="w-6 h-6"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z"
-                        />
-                      </svg>
-                    </button>
-                  )}
-                </div>
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M6.633 10.25c.806 0 1.533-.446 2.031-1.08a9.041 9.041 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75a.75.75 0 0 1 .75-.75 2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282m0 0h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H13.48c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23H5.904m10.598-9.75H14.25M5.904 18.5c.083.205.173.405.27.602.197.4-.078.898-.523.898h-.908c-.889 0-1.713-.518-1.972-1.368a12 12 0 0 1-.521-3.507c0-1.553.295-3.036.831-4.398C3.387 9.953 4.167 9.5 5 9.5h1.053c.472 0 .745.556.5.96a8.958 8.958 0 0 0-1.302 4.665c0 1.194.232 2.333.654 3.375Z"
+                      />
+                    </svg>
+                  </button>
+                )}
               </div>
-            )
-          )}
+            </div>
+          ))}
         </div>
       </div>
     </div>

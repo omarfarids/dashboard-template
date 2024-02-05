@@ -1,7 +1,12 @@
-import { useNavigate } from "react-router-dom";
+import { useGetData } from "@/hooks/useGetData";
+import { useNavigate, useParams } from "react-router-dom";
+import dummyProduct from "@/assets/product.webp";
 
 const Categories = () => {
   const navigate = useNavigate();
+  const { userId } = useParams();
+  const { data } = useGetData(`/customer/category/${userId}`);
+
   return (
     <div
       style={{
@@ -20,34 +25,36 @@ const Categories = () => {
               dinner for two, a lively family gathering, or a special
               celebration, we're thrilled to have you here.
             </p>
-            <button className="btn btn-primary">Pick Your Order Now </button>
+            <a href="#orders">
+              <button className="btn btn-primary">Pick Your Order Now </button>
+            </a>
           </div>
         </div>
       </div>
-      <div>
-        <div className=" flex flex-wrap justify-around gap-5 mt-5 ">
-          {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18].map(
-            () => (
-              <div
-                className="card card-compact w-80 bg-base-100 shadow-xl hover:opacity-80 "
-                onClick={() => {
-                  navigate(`products`);
-                }}
-              >
-                <figure>
-                  <img
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoPhgVJ_EdConWcowWxq3cZ9_3MxZMpxcn6A&usqp=CAU"
-                    alt="Food"
-                  />
-                </figure>
-                <div className="card-body">
-                  <h2 className="card-title">Food</h2>
-                  <p>sssssssssssssssssssssssssssssss</p>
-                  <div className="card-actions justify-end"></div>
-                </div>
+      <div id="orders" className="min-h-screen">
+        <div className="flex flex-row flex-wrap justify-start gap-5 m-5">
+          {data?.data?.map((item: any) => (
+            <div
+              key={item?._id}
+              className="card card-compact w-80 bg-base-100 shadow-xl hover:opacity-80 cursor-pointer"
+              onClick={() => {
+                navigate(`/customer/products/${item?._id}`);
+              }}
+            >
+              <figure>
+                <img
+                  className="h-60"
+                  src={item?.image?.length ? item?.image : dummyProduct}
+                  alt="Food"
+                />
+              </figure>
+              <div className="card-body">
+                <h2 className="card-title">{item?.name}</h2>
+                <p>{item?.description}</p>
+                <div className="card-actions justify-end"></div>
               </div>
-            )
-          )}
+            </div>
+          ))}
         </div>
       </div>
     </div>
