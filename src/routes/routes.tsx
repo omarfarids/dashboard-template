@@ -21,12 +21,12 @@ const router = createBrowserRouter([
     ],
   },
   {
-    path: "auth",
+    path: "/auth",
     element: <Auth />,
     children: [...authRoutes],
   },
   {
-    path: "customer",
+    path: "/customer",
     element: <Customer />,
     children: [...customerRoutes],
   },
