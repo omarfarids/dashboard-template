@@ -5,12 +5,13 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutate } from "@/hooks/useMutate";
 import Avatar from "@/components/Avatar";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useGetData } from "@/hooks/useGetData";
 import Cookies from "js-cookie";
 
 const Settings = () => {
   // ------------ hooks -------------
+  const inputRef: any = useRef(null);
   const [image, setImage] = useState<any>(null);
   const { mutateAsync } = useMutate();
   const [displayImages, setdisplayImages] = useState<any>(null);
@@ -45,6 +46,14 @@ const Settings = () => {
       });
   };
 
+  const copyContent = () => {
+    // Select the input field
+    inputRef.current.select();
+
+    // Copy the selected content to the clipboard
+    document.execCommand("copy");
+  };
+
   // ------------- useEffect ------------
   useEffect(() => {
     if (data?.data) {
@@ -53,6 +62,8 @@ const Settings = () => {
       setdisplayImages(data?.data?.image);
     }
   }, [data]);
+
+  console.log(data?.data);
 
   return (
     <section className="p-2 md:px-5 w-full">
@@ -67,10 +78,24 @@ const Settings = () => {
           setValue={setImage}
         />
         <p className=" font-semibold">Upload new avatar</p>
+
         <p className="underline text-gray cursor-pointer pb-5 font-semibold">
           Update your password?
         </p>
-
+        <div>
+          <p className="font-semibold pb-3">Your restaurant link</p>
+          <input
+            type="text"
+            ref={inputRef}
+            value={
+              import.meta.env.VITE_BASE_FRONTEND_URL +
+              `/customer/${data?.data?.id}`
+            }
+            readOnly
+            onClick={copyContent}
+            className="input input-bordered w-full input-md rounded-sm bg-softGray text-gray cursor-pointer w-full sm:w-[450px]"
+          />
+        </div>
         <div className="flex flex-col items-start gap-2">
           <div>
             <TextInput placeholder="username..." {...register("username")} />
