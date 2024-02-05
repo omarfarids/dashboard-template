@@ -3,12 +3,12 @@ import Products from "./pages/Products";
 import Orders from "./pages/Orders";
 export default [
   {
-    path: "",
+    path: ":userId",
     element: <Categories />,
     name: "Categories",
   },
   {
-    path: "products",
+    path: "products/:categoryId",
     element: <Products />,
     name: "Products",
   },

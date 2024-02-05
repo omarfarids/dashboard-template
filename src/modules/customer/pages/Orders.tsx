@@ -1,13 +1,53 @@
-import { useState } from "react";
+import { setCartItems } from "@/store/reducers/cartReducer";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import dammyProduct from "@/assets/product.webp";
+import { Link } from "react-router-dom";
 
 const Orders = () => {
-  const [price, setPirce] = useState(0);
-  const incrementPrice = () => {
-    setPirce(price + 100);
+  const [price, setPrice] = useState(0);
+  const dispatch = useDispatch();
+  const cartItems = useSelector((state: any) => state?.cart?.cartItems);
+  const [orderMessage, setOrderMessage] = useState("Cart%20is%20empty");
+
+  const incrementPrice = (id: any) => {
+    const newCartItems = cartItems.map((item: any) => {
+      if (item._id === id) {
+        return {
+          ...item,
+          quantity: item.quantity + 1,
+        };
+      }
+      return item;
+    });
+    dispatch(setCartItems(newCartItems));
   };
-  const decrementPrice = () => {
-    setPirce(price - 1);
+  const decrementPrice = (id: any) => {
+    const newCartItems = cartItems.map((item: any) => {
+      if (item._id === id) {
+        return {
+          ...item,
+          quantity: item.quantity - 1,
+        };
+      }
+      return item;
+    });
+    dispatch(setCartItems(newCartItems));
   };
+
+  useEffect(() => {
+    const total = cartItems?.reduce(
+      (total: any, item: any) => total + item.price * item.quantity,
+      0
+    );
+    setPrice(total);
+
+    const message = cartItems
+      ?.map((item: any) => `${item.name}: ${item.quantity}`)
+      .join(", ");
+    setOrderMessage(`${message}/ Total: ${total}`.split(" ")?.join("%20"));
+  }, [cartItems]);
+
   return (
     <div
       style={{
@@ -19,7 +59,7 @@ const Orders = () => {
         <div className="hero-overlay bg-opacity-60"></div>
         <div className="hero-content text-center text-neutral-content">
           <div className="max-w-md ">
-            <h1 className="mb-5 text-5xl font-bold"> prodects name</h1>
+            <h1 className="mb-5 text-5xl font-bold">Your Cart Items</h1>
             <p className="mb-5">
               Step into a world of culinary delight where every dish tells a
               story .
@@ -27,22 +67,27 @@ const Orders = () => {
           </div>
         </div>
       </div>
-      <div>
-        <div className=" flex flex-wrap justify-around gap-5 mt-5  ">
-          {[1, 2, 3, 4, 5, 6, 7].map(() => (
+      <div className="min-h-screen">
+        <div className="flex flex-row flex-wrap justify-start gap-5 my-5  ">
+          {cartItems?.map((item: any) => (
             <div className="card card-compact  bg-base-100 shadow-xl flex flex-row w-full mx-5 h-40 ">
               <figure>
                 <img
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSoPhgVJ_EdConWcowWxq3cZ9_3MxZMpxcn6A&usqp=CAU"
+                  src={item?.image?.length ? item?.image : dammyProduct}
                   alt="Food"
+                  className="w-40 h-40"
                 />
               </figure>
               <div className="card-body">
-                <h2 className="card-title  justify-center">مشويااات</h2>
-                <p>Price : {price} </p>
+                <h2 className="card-title  justify-center">{item?.name}</h2>
+                <p>Price : {item?.price} </p>
 
                 <div className="card-actions justify-end">
-                  <button className="btn" onClick={incrementPrice}>
+                  <p>Quantity : {item?.quantity}</p>
+                  <button
+                    className="btn"
+                    onClick={() => incrementPrice(item?._id)}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -58,7 +103,11 @@ const Orders = () => {
                       />
                     </svg>
                   </button>
-                  <button className="btn" onClick={decrementPrice}>
+                  <button
+                    className="btn"
+                    onClick={() => decrementPrice(item?._id)}
+                    disabled={item?.quantity === 1}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -74,7 +123,10 @@ const Orders = () => {
                       />
                     </svg>
                   </button>
-                  <button className="btn">
+                  <button
+                    className="btn"
+                    onClick={() => dispatch(setCartItems([]))}
+                  >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       fill="none"
@@ -95,7 +147,7 @@ const Orders = () => {
             </div>
           ))}
         </div>
-        <div className="card card-compact  bg-base-100 shadow-xl flex flex-row w-full mx-5 h-40 mt-5">
+        <div className="card card-compact  bg-base-100 shadow-xl flex flex-row w-full h-40 mt-5">
           <div
             className="card  bg-base-100 shadow-xl flex justify-center w-full 
          "
@@ -108,8 +160,8 @@ const Orders = () => {
               <p className="font-bold ">Total amount : {price}</p>
             </div>
 
-            <a
-              href="https://wa.me/01099913538/?text=midooo%20wasss%20here"
+            <Link
+              to={`https://wa.me/01099913538/?text=${orderMessage}`}
               className="btn link-accent  mt-3"
             >
               <svg
@@ -127,7 +179,7 @@ const Orders = () => {
                 />
               </svg>{" "}
               Order Now
-            </a>
+            </Link>
           </div>
         </div>
       </div>
