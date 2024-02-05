@@ -25,11 +25,11 @@ const Categories = () => {
         </div>
       </div>
       <div>
-        <div className=" flex flex-wrap justify-around gap-5  ">
+        <div className=" flex flex-wrap justify-around gap-5 mt-5 ">
           {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18].map(
             () => (
               <div
-                className="card card-compact w-96 bg-base-100 shadow-xl hover:opacity-80 "
+                className="card card-compact w-80 bg-base-100 shadow-xl hover:opacity-80 "
                 onClick={() => {
                   navigate(`products`);
                 }}
