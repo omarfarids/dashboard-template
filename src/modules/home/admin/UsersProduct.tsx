@@ -20,7 +20,7 @@ const TITLES: any = [
   { label: "Price", key: "price", type: "text" },
 ];
 
-const Products = () => {
+const UsersProduct = () => {
   // ------------ hooks -------------
   const [openModal, setOpenModal] = useState(false);
   const param = useParams();
@@ -137,4 +137,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default UsersProduct;

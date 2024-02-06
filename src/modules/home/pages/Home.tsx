@@ -13,7 +13,7 @@ const Dashboard = () => {
 
   return (
     <section className="p-2 md:p-5">
-      <Table title={TITLES} data={data?.data} />
+      <Table title={TITLES} data={data?.data} isNavigatable={true} />
     </section>
   );
 };
