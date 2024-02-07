@@ -1,11 +1,12 @@
 import { Type_Nav_Items } from "@/types/layout";
 import { useState } from "react";
 import { useSelector } from "react-redux";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 
 const Sidebar = ({ navItems }: { navItems: Type_Nav_Items[] }) => {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
   const globalState = useSelector((state: any) => state.global);
+  const { pathname } = useLocation();
 
   const toggleSideBar = () => {
     setIsSideBarOpen(!isSideBarOpen);
@@ -38,7 +39,10 @@ const Sidebar = ({ navItems }: { navItems: Type_Nav_Items[] }) => {
               <NavLink
                 key={item.path}
                 to={item.path}
-                className="flex items-center gap-2 p-4 text-xl font-semibold hover:bg-soft-gray"
+                className={`${
+                  item.path.slice(1) === pathname?.split("/")[1] &&
+                  "active-route"
+                } flex items-center gap-2 p-4 text-xl font-semibold hover:bg-soft-gray`}
               >
                 <i className={item.icon}></i>
                 {item.name}

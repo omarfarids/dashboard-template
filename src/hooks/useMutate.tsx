@@ -1,3 +1,4 @@
+import { notify } from "@/utils/notify";
 import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -15,9 +16,13 @@ export const useMutate = () => {
             "Content-Type": "multipart/form-data",
           },
         });
+
+        notify(response?.data?.message, "success");
         return response.data;
       } catch (error: any) {
-        throw new Error(error.response?.data || "An error occurred");
+        console.log(error);
+        notify(error.response.data?.message, "error");
+        throw new Error(error.response.data || "An error occurred");
       }
     },
   });

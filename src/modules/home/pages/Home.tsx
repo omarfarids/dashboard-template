@@ -1,3 +1,4 @@
+import Loading from "@/components/Loading";
 import Table from "@/components/Table";
 import { useGetData } from "@/hooks/useGetData";
 
@@ -9,7 +10,11 @@ const TITLES: any = [
 
 const Dashboard = () => {
   // ------------ hooks -------------
-  const { data } = useGetData(`/user`);
+  const { data, isLoading, isRefetching } = useGetData(`/user`);
+
+  if (isLoading || isRefetching) {
+    return <Loading />;
+  }
 
   return (
     <section className="p-2 md:p-5">
