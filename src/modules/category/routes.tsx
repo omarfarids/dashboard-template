@@ -2,12 +2,12 @@ import Category from "./pages/Category";
 import Product from "./pages/Product";
 export default [
   {
-    path: "category",
+    path: "/category",
     element: <Category />,
     name: "Categories",
   },
   {
-    path: "category/:categoryId",
+    path: "/category/:categoryId",
     element: <Product />,
     name: "Categories",
   },
