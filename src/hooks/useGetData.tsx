@@ -3,7 +3,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 export const useGetData = (url: string) => {
-  const { data, isLoading, error, refetch } = useQuery<any>({
+  const query = useQuery<any>({
     queryKey: ["repoData"],
     queryFn: async () => {
       const response = await axios.get(import.meta.env.VITE_BASE_URL + url, {
@@ -13,8 +13,8 @@ export const useGetData = (url: string) => {
       });
       return response.data;
     },
-    retry: 3,
+    retry: 0,
   });
 
-  return { data, isLoading, error, refetch };
+  return { ...query };
 };

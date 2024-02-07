@@ -10,9 +10,9 @@ const TITLES: any = [
 
 const Dashboard = () => {
   // ------------ hooks -------------
-  const { data, isLoading } = useGetData(`/user`);
+  const { data, isLoading, isRefetching } = useGetData(`/user`);
 
-  if (isLoading) {
+  if (isLoading || isRefetching) {
     return <Loading />;
   }
 

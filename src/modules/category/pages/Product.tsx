@@ -10,6 +10,7 @@ import TextInput from "@/components/TextInput";
 import Avatar from "@/components/Avatar";
 import * as yup from "yup";
 import { useParams } from "react-router-dom";
+import Loading from "@/components/Loading";
 
 const TITLES: any = [
   { label: "Image", key: "image", type: "image" },
@@ -25,7 +26,9 @@ const Products = () => {
   const [openModal, setOpenModal] = useState(false);
   const param = useParams();
 
-  const { data, refetch } = useGetData(`/product/${param.categoryId}`);
+  const { data, isLoading, refetch, isRefetching } = useGetData(
+    `/product/${param.categoryId}`
+  );
   const [value, setValue] = useState<any>(null);
   const [displayImages, setdisplayImages] = useState<any>(null);
   const { mutateAsync } = useMutate();
@@ -84,6 +87,10 @@ const Products = () => {
         console.log(error);
       });
   };
+
+  if (isLoading || isRefetching) {
+    return <Loading />;
+  }
 
   return (
     <section className="p-2 md:p-5 flex flex-col">
