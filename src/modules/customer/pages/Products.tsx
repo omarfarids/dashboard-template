@@ -53,7 +53,7 @@ const Products = () => {
         <div className="hero-overlay bg-opacity-60"></div>
         <div className="hero-content text-center text-neutral-content">
           <div className="max-w-md ">
-            <h1 className="mb-5 text-5xl font-bold">مشويااات </h1>
+            <h1 className="mb-5 text-5xl font-bold">{itemIDs.name}</h1>
             <p className="mb-5">
               Step into a world of culinary delight where every dish tells a
               story and every meal is a journey. Whether you're seeking a cozy

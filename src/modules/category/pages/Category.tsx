@@ -43,7 +43,7 @@ const Category = () => {
   const handleClose = () => {
     setOpenModal(false);
   };
-
+  console.log(data);
   const {
     register,
     handleSubmit,
@@ -54,7 +54,7 @@ const Category = () => {
   });
   const onDelete: SubmitHandler<any> = () => {
     mutateAsync({
-      url: `/category/${categoryId}`,
+      url: `/category/${categoryId._id}`,
       method: "DELETE",
     })
       .then(() => {
@@ -88,6 +88,9 @@ const Category = () => {
 
   return (
     <section className="p-2 md:p-5 flex flex-col">
+      <header>
+        <h1 className="text-3xl font-semibold capitalize">Category</h1>
+      </header>
       <div className="my-5 w-72 self-end">
         <Button
           onClick={handleOpen}
