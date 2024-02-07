@@ -8,6 +8,7 @@ import Avatar from "@/components/Avatar";
 import { useEffect, useRef, useState } from "react";
 import { useGetData } from "@/hooks/useGetData";
 import Cookies from "js-cookie";
+import Loading from "@/components/Loading";
 import QRCode from "react-qr-code";
 
 const Settings = () => {
@@ -16,7 +17,9 @@ const Settings = () => {
   const [image, setImage] = useState<any>(null);
   const { mutateAsync } = useMutate();
   const [displayImages, setdisplayImages] = useState<any>(null);
-  const { data, refetch } = useGetData(`/user/${Cookies.get("userId")}`);
+  const { data, refetch, isRefetching, isLoading } = useGetData(
+    `/user/${Cookies.get("userId")}`
+  );
 
   const schema = yup.object().shape({
     username: yup.string().required("Username is a required field"),
@@ -64,7 +67,9 @@ const Settings = () => {
     }
   }, [data]);
 
-  console.log(data?.data);
+  if (isLoading || isRefetching) {
+    return <Loading />;
+  }
 
   return (
     <section className="p-2 md:px-5 w-full">

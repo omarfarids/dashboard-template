@@ -10,6 +10,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import TextInput from "@/components/TextInput";
 import Avatar from "@/components/Avatar";
 import * as yup from "yup";
+import Loading from "@/components/Loading";
 
 const TITLES: any = [
   { label: "Image", key: "image", type: "image" },
@@ -24,7 +25,7 @@ const Category = () => {
   const [openModal, setOpenModal] = useState(false);
 
   const globalState = useSelector((state: any) => state.global);
-  const { data, refetch } = useGetData(
+  const { data, isLoading, refetch, isRefetching } = useGetData(
     `/category/${globalState?.user?.userId}`
   );
   const [value, setValue] = useState<any>(null);
@@ -84,7 +85,9 @@ const Category = () => {
       });
   };
 
-  console.log(openModal);
+  if (isLoading || isRefetching) {
+    return <Loading />;
+  }
 
   return (
     <section className="p-2 md:p-5 flex flex-col">

@@ -54,6 +54,7 @@ const Login = () => {
         });
         navigate(permittedRoute?.path || "/home");
       })
+
       .catch((error: any) => {
         console.log(error);
       });
