@@ -1,7 +1,6 @@
 import Table from "@/components/Table";
 import { useGetData } from "@/hooks/useGetData";
 import Button from "@/components/Button";
-import { useSelector } from "react-redux";
 import ModalWrapper from "@/components/ModalWrapper";
 import { useState } from "react";
 import { useMutate } from "@/hooks/useMutate";
@@ -10,7 +9,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import TextInput from "@/components/TextInput";
 import Avatar from "@/components/Avatar";
 import * as yup from "yup";
-import Loading from "@/components/Loading";
+import { useParams } from "react-router-dom";
 
 const TITLES: any = [
   { label: "Image", key: "image", type: "image" },
@@ -18,16 +17,15 @@ const TITLES: any = [
   { label: "Description", key: "description", type: "text" },
   { label: "Created at", key: "createdAt", type: "text" },
   { label: "Update at", key: "updatedAt", type: "text" },
+  { label: "Price", key: "price", type: "text" },
 ];
 
-const Category = () => {
+const UsersProduct = () => {
   // ------------ hooks -------------
   const [openModal, setOpenModal] = useState(false);
+  const param = useParams();
 
-  const globalState = useSelector((state: any) => state.global);
-  const { data, isLoading, refetch, isRefetching } = useGetData(
-    `/category/${globalState?.user?.userId}`
-  );
+  const { data, refetch } = useGetData(`/product/${param.categoryId}`);
   const [value, setValue] = useState<any>(null);
   const [displayImages, setdisplayImages] = useState<any>(null);
   const { mutateAsync } = useMutate();
@@ -35,16 +33,9 @@ const Category = () => {
   const schema = yup.object().shape({
     name: yup.string().required("Name is a required field"),
     description: yup.string().required("Description is a required field"),
+    price: yup.string().required("Price is a required field"),
   });
-  const categoryId = data?.data?.[0]?._id;
-  // -------------- functions ----------------
-  const handleOpen = () => {
-    setOpenModal(true);
-  };
-  const handleClose = () => {
-    setOpenModal(false);
-  };
-  console.log(data);
+
   const {
     register,
     handleSubmit,
@@ -53,9 +44,37 @@ const Category = () => {
   }: any = useForm({
     resolver: yupResolver(schema),
   });
-  const onDelete: SubmitHandler<any> = () => {
+
+  const onSubmit: SubmitHandler<any> = (data: any) => {
     mutateAsync({
-      url: `/category/${categoryId._id}`,
+      url: "/product",
+      method: "POST",
+      body: { ...data, image: value, categoryId: param.categoryId },
+    })
+      .then(() => {
+        refetch();
+        handleClose();
+      })
+      .then(() => {
+        setFormValues("name", "");
+        setFormValues("price", "");
+        setFormValues("description", "");
+      })
+      .catch((error: any) => {
+        console.log(error);
+      });
+  };
+
+  // -------------- functions ----------------
+  const handleOpen = () => {
+    setOpenModal(true);
+  };
+  const handleClose = () => {
+    setOpenModal(false);
+  };
+  const onDelete: SubmitHandler<any> = (data: any) => {
+    mutateAsync({
+      url: `/product/${data?._id}`,
       method: "DELETE",
     })
       .then(() => {
@@ -66,39 +85,13 @@ const Category = () => {
       });
   };
 
-  const onSubmit: SubmitHandler<any> = (data: any) => {
-    mutateAsync({
-      url: "/category",
-      method: "POST",
-      body: { ...data, image: value, userId: globalState?.user?.userId },
-    })
-      .then(() => {
-        refetch();
-        handleClose();
-      })
-      .then(() => {
-        setFormValues("name", "");
-        setFormValues("description", "");
-      })
-      .catch((error: any) => {
-        console.log(error);
-      });
-  };
-
-  if (isLoading || isRefetching) {
-    return <Loading />;
-  }
-
   return (
     <section className="p-2 md:p-5 flex flex-col">
-      <header>
-        <h1 className="text-3xl font-semibold capitalize">Category</h1>
-      </header>
       <div className="my-5 w-72 self-end">
         <Button
           onClick={handleOpen}
           className="w-56"
-          label="Create New Category"
+          label="Create New Prodect"
         />
         <ModalWrapper openModal={openModal} handleClose={handleClose}>
           <div>
@@ -116,6 +109,12 @@ const Category = () => {
               />
               <TextInput placeholder="Prodect name" {...register("name")} />
               <p>{errors.name?.message}</p>
+              <TextInput
+                placeholder="Price"
+                className="w-full sm:w-[100px] input input-bordered"
+                {...register("price")}
+              />
+              <p>{errors.price?.message}</p>
               <textarea
                 className="textarea textarea-bordered h-24 w-full sm:w-[450px]"
                 placeholder="Description..."
@@ -131,7 +130,6 @@ const Category = () => {
       <Table
         title={TITLES}
         data={data?.data}
-        isNavigatable={true}
         hasActions={true}
         onDelete={onDelete}
       />
@@ -139,4 +137,4 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default UsersProduct;

@@ -10,7 +10,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import TextInput from "@/components/TextInput";
 import Avatar from "@/components/Avatar";
 import * as yup from "yup";
-import Loading from "@/components/Loading";
+import { useParams } from "react-router-dom";
 
 const TITLES: any = [
   { label: "Image", key: "image", type: "image" },
@@ -20,14 +20,13 @@ const TITLES: any = [
   { label: "Update at", key: "updatedAt", type: "text" },
 ];
 
-const Category = () => {
+const UsersCategory = () => {
   // ------------ hooks -------------
   const [openModal, setOpenModal] = useState(false);
+  const param = useParams();
 
   const globalState = useSelector((state: any) => state.global);
-  const { data, isLoading, refetch, isRefetching } = useGetData(
-    `/category/${globalState?.user?.userId}`
-  );
+  const { data, refetch } = useGetData(`/category/${param.userId}`);
   const [value, setValue] = useState<any>(null);
   const [displayImages, setdisplayImages] = useState<any>(null);
   const { mutateAsync } = useMutate();
@@ -36,6 +35,7 @@ const Category = () => {
     name: yup.string().required("Name is a required field"),
     description: yup.string().required("Description is a required field"),
   });
+  console.log(data);
   const categoryId = data?.data?.[0]?._id;
   // -------------- functions ----------------
   const handleOpen = () => {
@@ -44,7 +44,7 @@ const Category = () => {
   const handleClose = () => {
     setOpenModal(false);
   };
-  console.log(data);
+
   const {
     register,
     handleSubmit,
@@ -55,7 +55,7 @@ const Category = () => {
   });
   const onDelete: SubmitHandler<any> = () => {
     mutateAsync({
-      url: `/category/${categoryId._id}`,
+      url: `/category/${categoryId}`,
       method: "DELETE",
     })
       .then(() => {
@@ -85,15 +85,10 @@ const Category = () => {
       });
   };
 
-  if (isLoading || isRefetching) {
-    return <Loading />;
-  }
+  console.log(openModal);
 
   return (
     <section className="p-2 md:p-5 flex flex-col">
-      <header>
-        <h1 className="text-3xl font-semibold capitalize">Category</h1>
-      </header>
       <div className="my-5 w-72 self-end">
         <Button
           onClick={handleOpen}
@@ -139,4 +134,4 @@ const Category = () => {
   );
 };
 
-export default Category;
+export default UsersCategory;

@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import { useGetData } from "@/hooks/useGetData";
 import Cookies from "js-cookie";
 import Loading from "@/components/Loading";
+import QRCode from "react-qr-code";
 
 const Settings = () => {
   // ------------ hooks -------------
@@ -72,47 +73,63 @@ const Settings = () => {
 
   return (
     <section className="p-2 md:px-5 w-full">
-      <p className="text-2xl font-semibold">Update your profile</p>
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="flex flex-col gap-5 items-center mt-5"
-      >
-        <Avatar
-          displayImages={displayImages}
-          setDisplayImages={setdisplayImages}
-          setValue={setImage}
-        />
-        <p className=" font-semibold">Upload new avatar</p>
-
-        <p className="underline text-gray cursor-pointer pb-5 font-semibold">
-          Update your password?
-        </p>
-        <div>
-          <p className="font-semibold pb-3">Your restaurant link</p>
-          <input
-            type="text"
-            ref={inputRef}
-            value={
-              import.meta.env.VITE_BASE_FRONTEND_URL +
-              `/customer/${data?.data?.id}`
-            }
-            readOnly
-            onClick={copyContent}
-            className="input input-bordered w-full input-md rounded-sm bg-softGray text-gray cursor-pointer w-full sm:w-[450px]"
+      <header>
+        <h1 className="text-3xl font-semibold capitalize">Settings</h1>
+      </header>
+      <div className="mt-5 ">
+        <div className="divider"></div>
+        <p className="text-2xl font-semibold">Update your profile</p>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="flex flex-col gap-5 items-center mt-5"
+        >
+          <Avatar
+            displayImages={displayImages}
+            setDisplayImages={setdisplayImages}
+            setValue={setImage}
           />
-        </div>
-        <div className="flex flex-col items-start gap-2">
+          <p className=" font-semibold">Upload new avatar</p>
+
+          <p className="underline text-gray cursor-pointer pb-5 font-semibold">
+            Update your password?
+          </p>
           <div>
-            <TextInput placeholder="username..." {...register("username")} />
-            <p>{errors.username?.message}</p>
+            <p className="font-semibold pb-3">Your restaurant link</p>
+            <input
+              type="text"
+              ref={inputRef}
+              value={
+                import.meta.env.VITE_BASE_FRONTEND_URL +
+                `/customer/${data?.data?.id}`
+              }
+              readOnly
+              onClick={copyContent}
+              className="input input-bordered w-full input-md rounded-sm bg-softGray text-gray cursor-pointer w-full sm:w-[450px]"
+            />
+            <p className="font-semibold pb-3 pt-3">QR Code</p>
+            <div className="flex justify-center">
+              <QRCode
+                value={
+                  import.meta.env.VITE_BASE_FRONTEND_URL +
+                  `/customer/${data?.data?.id}`
+                }
+                size={300}
+              />
+            </div>
           </div>
-          <div>
-            <TextInput placeholder="Email Address" {...register("email")} />
-            <p>{errors.email?.message}</p>
+          <div className="flex flex-col items-start gap-2">
+            <div>
+              <TextInput placeholder="username..." {...register("username")} />
+              <p>{errors.username?.message}</p>
+            </div>
+            <div>
+              <TextInput placeholder="Email Address" {...register("email")} />
+              <p>{errors.email?.message}</p>
+            </div>
+            <Button label="Save changes" className="w-full rounded-sm " />
           </div>
-          <Button label="Save changes" className="w-full rounded-sm " />
-        </div>
-      </form>
+        </form>
+      </div>
     </section>
   );
 };
