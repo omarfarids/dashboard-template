@@ -23,6 +23,11 @@ const TITLES: any = [
 const Category = () => {
   // ------------ hooks -------------
   const [openModal, setOpenModal] = useState(false);
+  const [loading, setLoading] = useState<any>({
+    add: false,
+    edit: false,
+    delete: false,
+  });
 
   const globalState = useSelector((state: any) => state.global);
   const { data, isLoading, refetch, isRefetching } = useGetData(
@@ -54,12 +59,14 @@ const Category = () => {
     resolver: yupResolver(schema),
   });
   const onDelete: SubmitHandler<any> = () => {
+    setLoading((prev: any) => ({ ...prev, delete: true }));
     mutateAsync({
       url: `/category/${categoryId}`,
       method: "DELETE",
     })
-      .then(() => {
-        refetch();
+      .then(async () => {
+        await refetch();
+        setLoading((prev: any) => ({ ...prev, delete: false }));
       })
       .catch((error: any) => {
         console.log(error);
@@ -67,13 +74,15 @@ const Category = () => {
   };
 
   const onSubmit: SubmitHandler<any> = (data: any) => {
+    setLoading((prev: any) => ({ ...prev, add: true }));
     mutateAsync({
       url: "/category",
       method: "POST",
       body: { ...data, image: value, userId: globalState?.user?.userId },
     })
-      .then(() => {
-        refetch();
+      .then(async () => {
+        await refetch();
+        setLoading((prev: any) => ({ ...prev, add: false }));
         handleClose();
       })
       .then(() => {
@@ -120,7 +129,11 @@ const Category = () => {
               />
               <p>{errors.description?.message}</p>
 
-              <Button label="Submit" className="w-full rounded-sm mt-2" />
+              <Button
+                isLoading={loading.add}
+                label="Submit"
+                className="w-full rounded-sm mt-2"
+              />
             </form>
           </div>
         </ModalWrapper>

@@ -14,7 +14,7 @@ const Settings = () => {
   // ------------ hooks -------------
   const inputRef: any = useRef(null);
   const [image, setImage] = useState<any>(null);
-  const { mutateAsync } = useMutate();
+  const { mutateAsync, isPending } = useMutate();
   const [displayImages, setdisplayImages] = useState<any>(null);
   const { data, refetch, isRefetching, isLoading } = useGetData(
     `/user/${Cookies.get("userId")}`
@@ -110,7 +110,11 @@ const Settings = () => {
             <TextInput placeholder="Email Address" {...register("email")} />
             <p>{errors.email?.message}</p>
           </div>
-          <Button label="Save changes" className="w-full rounded-sm " />
+          <Button
+            isLoading={isPending}
+            label="Save changes"
+            className="w-full rounded-sm "
+          />
         </div>
       </form>
     </section>

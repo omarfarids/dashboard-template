@@ -25,6 +25,11 @@ const Products = () => {
   // ------------ hooks -------------
   const [openModal, setOpenModal] = useState(false);
   const param = useParams();
+  const [loading, setLoading] = useState<any>({
+    add: false,
+    edit: false,
+    delete: false,
+  });
 
   const { data, isLoading, refetch, isRefetching } = useGetData(
     `/product/${param.categoryId}`
@@ -49,13 +54,15 @@ const Products = () => {
   });
 
   const onSubmit: SubmitHandler<any> = (data: any) => {
+    setLoading((prev: any) => ({ ...prev, add: true }));
     mutateAsync({
       url: "/product",
       method: "POST",
       body: { ...data, image: value, categoryId: param.categoryId },
     })
-      .then(() => {
-        refetch();
+      .then(async () => {
+        await refetch();
+        setLoading((prev: any) => ({ ...prev, add: false }));
         handleClose();
       })
       .then(() => {
@@ -76,12 +83,14 @@ const Products = () => {
     setOpenModal(false);
   };
   const onDelete: SubmitHandler<any> = (data: any) => {
+    setLoading((prev: any) => ({ ...prev, delete: true }));
     mutateAsync({
       url: `/product/${data?._id}`,
       method: "DELETE",
     })
-      .then(() => {
-        refetch();
+      .then(async () => {
+        await refetch();
+        setLoading((prev: any) => ({ ...prev, delete: false }));
       })
       .catch((error: any) => {
         console.log(error);
@@ -129,7 +138,11 @@ const Products = () => {
               />
               <p>{errors.description?.message}</p>
 
-              <Button label="Submit" className="w-full rounded-sm mt-2" />
+              <Button
+                isLoading={loading.add}
+                label="Submit"
+                className="w-full rounded-sm mt-2"
+              />
             </form>
           </div>
         </ModalWrapper>

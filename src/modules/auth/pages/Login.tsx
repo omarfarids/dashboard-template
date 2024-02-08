@@ -12,7 +12,7 @@ import { NAV_ITEMS } from "@/layouts/dashboard/constants";
 
 const Login = () => {
   // ------------ hooks -------------
-  const { mutateAsync } = useMutate();
+  const { mutateAsync, isPending } = useMutate();
 
   const dispatch = useDispatch();
 
@@ -75,7 +75,11 @@ const Login = () => {
           {...register("password")}
         />
         <p>{errors.password?.message}</p>
-        <Button label="Login" className="w-full rounded-sm mt-2" />
+        <Button
+          label="Login"
+          className="w-full rounded-sm mt-2"
+          isLoading={isPending}
+        />
         <Link
           className="underline font-semibold mt-5 text-gray hover:text-softGray"
           to={"/auth/sign-up"}
