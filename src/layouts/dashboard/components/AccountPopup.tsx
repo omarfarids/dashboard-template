@@ -31,11 +31,9 @@ const Dropdown = () => {
       </div>
       <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
         <li>
-          <Link to="/">Item 1</Link>
+          <Link to="/settings">Settings</Link>
         </li>
-        <li>
-          <Link to="/">Item 2</Link>
-        </li>
+
         <hr />
         <li className="pt-1">
           <Link

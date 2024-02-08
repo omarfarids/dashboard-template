@@ -10,7 +10,6 @@ import TextInput from "@/components/TextInput";
 import Avatar from "@/components/Avatar";
 import * as yup from "yup";
 import { useParams } from "react-router-dom";
-import Loading from "@/components/Loading";
 
 const TITLES: any = [
   { label: "Image", key: "image", type: "image" },
@@ -21,19 +20,12 @@ const TITLES: any = [
   { label: "Price", key: "price", type: "text" },
 ];
 
-const Products = () => {
+const UsersProduct = () => {
   // ------------ hooks -------------
   const [openModal, setOpenModal] = useState(false);
   const param = useParams();
-  const [loading, setLoading] = useState<any>({
-    add: false,
-    edit: false,
-    delete: false,
-  });
 
-  const { data, isLoading, refetch, isRefetching } = useGetData(
-    `/product/${param.categoryId}`
-  );
+  const { data, refetch } = useGetData(`/product/${param.categoryId}`);
   const [value, setValue] = useState<any>(null);
   const [displayImages, setdisplayImages] = useState<any>(null);
   const { mutateAsync } = useMutate();
@@ -54,15 +46,13 @@ const Products = () => {
   });
 
   const onSubmit: SubmitHandler<any> = (data: any) => {
-    setLoading((prev: any) => ({ ...prev, add: true }));
     mutateAsync({
       url: "/product",
       method: "POST",
       body: { ...data, image: value, categoryId: param.categoryId },
     })
-      .then(async () => {
-        await refetch();
-        setLoading((prev: any) => ({ ...prev, add: false }));
+      .then(() => {
+        refetch();
         handleClose();
       })
       .then(() => {
@@ -83,29 +73,20 @@ const Products = () => {
     setOpenModal(false);
   };
   const onDelete: SubmitHandler<any> = (data: any) => {
-    setLoading((prev: any) => ({ ...prev, delete: true }));
     mutateAsync({
       url: `/product/${data?._id}`,
       method: "DELETE",
     })
-      .then(async () => {
-        await refetch();
-        setLoading((prev: any) => ({ ...prev, delete: false }));
+      .then(() => {
+        refetch();
       })
       .catch((error: any) => {
         console.log(error);
       });
   };
 
-  if (isLoading || isRefetching) {
-    return <Loading />;
-  }
-
   return (
     <section className="p-2 md:p-5 flex flex-col">
-      <header>
-        <h1 className="text-3xl font-semibold capitalize">Product</h1>
-      </header>
       <div className="my-5 w-72 self-end">
         <Button
           onClick={handleOpen}
@@ -141,11 +122,7 @@ const Products = () => {
               />
               <p>{errors.description?.message}</p>
 
-              <Button
-                isLoading={loading.add}
-                label="Submit"
-                className="w-full rounded-sm mt-2"
-              />
+              <Button label="Submit" className="w-full rounded-sm mt-2" />
             </form>
           </div>
         </ModalWrapper>
@@ -160,4 +137,4 @@ const Products = () => {
   );
 };
 
-export default Products;
+export default UsersProduct;
