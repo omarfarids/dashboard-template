@@ -100,9 +100,6 @@ const Category = () => {
 
   return (
     <section className="p-2 md:p-5 flex flex-col">
-      <header>
-        <h1 className="text-3xl font-semibold capitalize">Category</h1>
-      </header>
       <div className="my-5 w-72 self-end">
         <Button
           onClick={handleOpen}

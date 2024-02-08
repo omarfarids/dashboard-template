@@ -110,11 +110,11 @@ const Products = () => {
         <Button
           onClick={handleOpen}
           className="w-56"
-          label="Create New Prodect"
+          label="Create New Product"
         />
         <ModalWrapper openModal={openModal} handleClose={handleClose}>
           <div>
-            <h1 className="text-xl font-bold mb-5">Create new category</h1>
+            <h1 className="text-xl font-bold mb-5">Create New Product</h1>
           </div>
           <div>
             <form

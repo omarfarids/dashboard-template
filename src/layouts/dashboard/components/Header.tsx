@@ -6,7 +6,9 @@ const Header = () => {
 
   return (
     <div className="flex justify-between items-center p-6">
-      <h1 className="text-3xl font-semibold capitalize"></h1>
+      <h1 className="text-3xl font-semibold capitalize">
+        {pathname.slice(1).split("/")[0]}
+      </h1>
       <div className="flex flex-row gap-2 items-center">
         <div className="relative hover:bg-soft-gray w-12 h-12 flex justify-center items-center rounded-full cursor-pointer">
           <svg
