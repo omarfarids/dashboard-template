@@ -50,7 +50,7 @@ const Table = ({
                               navigate(`${item._id}`);
                             }
                           }}
-                          className="py-3 px-4 "
+                          className="py-3 px-4"
                         >
                           {" "}
                           {x?.type === "image" ? (
@@ -69,12 +69,15 @@ const Table = ({
                     })}
                     {hasActions && (
                       <td className="py-3 px-4 flex flex-row gap-2">
-                        {onEdit ?? (
-                          <button onClick={onEdit} className="btn">
+                        {onEdit && (
+                          <button
+                            onClick={() => onEdit(item._id)}
+                            className="btn"
+                          >
                             Edit
                           </button>
                         )}
-                        {onEdit ?? (
+                        {onDelete && (
                           <button
                             onClick={() => onDelete(item)}
                             className="btn btn-outline btn-error"

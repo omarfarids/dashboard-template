@@ -4,23 +4,25 @@ interface ModalWrapperProps {
   children: React.ReactNode;
   openModal: boolean;
   handleClose?: () => void;
+  modalType?: string;
 }
 const ModalWrapper = ({
   openModal,
   children,
   handleClose,
+  modalType = "my_modal_3",
 }: ModalWrapperProps) => {
   useEffect(() => {
     if (openModal) {
-      (document.getElementById("my_modal_3") as HTMLDialogElement)?.showModal();
+      (document.getElementById(modalType) as HTMLDialogElement)?.showModal();
     } else {
-      (document.getElementById("my_modal_3") as HTMLDialogElement)?.close();
+      (document.getElementById(modalType) as HTMLDialogElement)?.close();
     }
   }, [openModal]);
 
   return (
     <>
-      <dialog id="my_modal_3" className="modal">
+      <dialog id={modalType} className="modal">
         <div className="modal-box">
           <form method="dialog">
             <button

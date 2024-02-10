@@ -6,9 +6,9 @@ import ModalWrapper from "@/components/ModalWrapper";
 import { useState } from "react";
 import { useMutate } from "@/hooks/useMutate";
 import { SubmitHandler, useForm } from "react-hook-form";
-import { yupResolver } from "@hookform/resolvers/yup";
 import TextInput from "@/components/TextInput";
 import Avatar from "@/components/Avatar";
+import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import Loading from "@/components/Loading";
 
@@ -23,6 +23,7 @@ const TITLES: any = [
 const Category = () => {
   // ------------ hooks -------------
   const [openModal, setOpenModal] = useState(false);
+  const [editedId, setEditedId] = useState<any>(null);
   const [loading, setLoading] = useState<any>({
     add: false,
     edit: false,
@@ -44,9 +45,13 @@ const Category = () => {
   const categoryId = data?.data?.[0]?._id;
   // -------------- functions ----------------
   const handleOpen = () => {
+    setFormValues("name", "");
+    setFormValues("description", "");
+    setdisplayImages(null);
     setOpenModal(true);
   };
   const handleClose = () => {
+    setEditedId(null);
     setOpenModal(false);
   };
   console.log(data);
@@ -94,6 +99,44 @@ const Category = () => {
       });
   };
 
+  const onEdit: SubmitHandler<any> = (data: any) => {
+    setLoading((prev: any) => ({ ...prev, add: true }));
+    mutateAsync({
+      url: "/category",
+      method: "PUT",
+      body: { ...data, image: value, categoryId: editedId },
+    })
+      .then(async () => {
+        await refetch();
+        setLoading((prev: any) => ({ ...prev, add: false }));
+        handleClose();
+        setEditedId(null);
+      })
+      .then(() => {
+        setFormValues("name", "");
+        setFormValues("description", "");
+      })
+      .catch((error: any) => {
+        console.log(error);
+      });
+  };
+
+  const getData = (id: any) => {
+    mutateAsync({
+      url: `/category/single-category/${id}`,
+      method: "GET",
+    })
+      .then((res) => {
+        setFormValues("name", res?.data?.name);
+        setFormValues("description", res?.data?.description);
+        setdisplayImages(res?.data?.image);
+        setEditedId(id);
+      })
+      .catch((error: any) => {
+        console.log(error);
+      });
+  };
+
   if (isLoading || isRefetching) {
     return <Loading />;
   }
@@ -108,11 +151,13 @@ const Category = () => {
         />
         <ModalWrapper openModal={openModal} handleClose={handleClose}>
           <div>
-            <h1 className="text-xl font-bold mb-5">Create new category</h1>
+            <h1 className="text-xl font-bold mb-5">
+              {editedId ? "Edit" : "Create"} new category
+            </h1>
           </div>
           <div>
             <form
-              onSubmit={handleSubmit(onSubmit)}
+              onSubmit={handleSubmit(editedId ? onEdit : onSubmit)}
               className="flex flex-col gap-2 items-center"
             >
               <Avatar
@@ -143,6 +188,10 @@ const Category = () => {
         data={data?.data}
         isNavigatable={true}
         hasActions={true}
+        onEdit={async (id: string | number) => {
+          getData(id);
+          handleOpen();
+        }}
         onDelete={onDelete}
       />
     </section>

@@ -1,6 +1,6 @@
 import Home from "./pages/Home";
-import UsersCategory from "./admin/UsersCategory";
-import UsersProduct from "./admin/UsersProduct";
+import UsersCategory from "./pages/UsersCategory";
+import UsersProduct from "./pages/UsersProduct";
 export default [
   {
     path: "/home",

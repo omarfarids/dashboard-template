@@ -9,6 +9,7 @@ import Cookies from "js-cookie";
 import { useDispatch } from "react-redux";
 import { registerUser } from "@/store/reducers/globalReducer";
 import { NAV_ITEMS } from "@/layouts/dashboard/constants";
+import ResetPassword from "../components/ResetPassword";
 
 const Login = () => {
   // ------------ hooks -------------
@@ -86,6 +87,7 @@ const Login = () => {
         >
           Don't have an account? Sign Up
         </Link>
+        <ResetPassword />
       </form>
     </section>
   );
