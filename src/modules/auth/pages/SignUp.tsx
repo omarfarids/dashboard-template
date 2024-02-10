@@ -12,7 +12,7 @@ const SignUp = () => {
   // ------------ hooks -------------
   const [value, setValue] = useState<any>(null);
   const [displayImages, setdisplayImages] = useState<any>(null);
-  const { mutateAsync } = useMutate();
+  const { mutateAsync, isPending } = useMutate();
 
   const schema = yup.object().shape({
     username: yup.string().required("Username is a required field"),
@@ -76,7 +76,11 @@ const SignUp = () => {
           {...register("confirmPassword")}
         />
         <p>{errors.confirmPassword?.message}</p>
-        <Button label="Submit" className="w-full rounded-sm mt-2" />
+        <Button
+          isLoading={isPending}
+          label="Submit"
+          className="w-full rounded-sm mt-2"
+        />
       </form>
     </section>
   );

@@ -10,6 +10,7 @@ import TextInput from "@/components/TextInput";
 import Avatar from "@/components/Avatar";
 import * as yup from "yup";
 import { useParams } from "react-router-dom";
+import Loading from "@/components/Loading";
 
 const TITLES: any = [
   { label: "Image", key: "image", type: "image" },
@@ -24,8 +25,15 @@ const UsersProduct = () => {
   // ------------ hooks -------------
   const [openModal, setOpenModal] = useState(false);
   const param = useParams();
-
-  const { data, refetch } = useGetData(`/product/${param.categoryId}`);
+  const [editedId, setEditedId] = useState<any>(null);
+  const [loading, setLoading] = useState<any>({
+    add: false,
+    edit: false,
+    delete: false,
+  });
+  const { data, refetch, isLoading, isRefetching } = useGetData(
+    `/product/${param.categoryId}`
+  );
   const [value, setValue] = useState<any>(null);
   const [displayImages, setdisplayImages] = useState<any>(null);
   const { mutateAsync } = useMutate();
@@ -45,14 +53,17 @@ const UsersProduct = () => {
     resolver: yupResolver(schema),
   });
 
+  // -------------- functions ----------------
   const onSubmit: SubmitHandler<any> = (data: any) => {
+    setLoading((prev: any) => ({ ...prev, add: true }));
     mutateAsync({
       url: "/product",
       method: "POST",
       body: { ...data, image: value, categoryId: param.categoryId },
     })
-      .then(() => {
-        refetch();
+      .then(async () => {
+        await refetch();
+        setLoading((prev: any) => ({ ...prev, add: false }));
         handleClose();
       })
       .then(() => {
@@ -65,28 +76,81 @@ const UsersProduct = () => {
       });
   };
 
-  // -------------- functions ----------------
   const handleOpen = () => {
+    setFormValues("name", "");
+    setFormValues("description", "");
+    setFormValues("price", "");
+    setdisplayImages(null);
     setOpenModal(true);
   };
   const handleClose = () => {
+    setEditedId(null);
     setOpenModal(false);
   };
   const onDelete: SubmitHandler<any> = (data: any) => {
+    setLoading((prev: any) => ({ ...prev, delete: true }));
     mutateAsync({
       url: `/product/${data?._id}`,
       method: "DELETE",
     })
-      .then(() => {
-        refetch();
+      .then(async () => {
+        await refetch();
+        setLoading((prev: any) => ({ ...prev, delete: false }));
       })
       .catch((error: any) => {
         console.log(error);
       });
   };
 
+  const onEdit: SubmitHandler<any> = (data: any) => {
+    setLoading((prev: any) => ({ ...prev, add: true }));
+    mutateAsync({
+      url: "/product",
+      method: "PUT",
+      body: { ...data, image: value, productId: editedId },
+    })
+      .then(async () => {
+        await refetch();
+        setLoading((prev: any) => ({ ...prev, add: false }));
+        handleClose();
+        setEditedId(null);
+      })
+      .then(() => {
+        setFormValues("name", "");
+        setFormValues("description", "");
+        setFormValues("price", "");
+      })
+      .catch((error: any) => {
+        console.log(error);
+      });
+  };
+
+  const getData = (id: any) => {
+    mutateAsync({
+      url: `/product/single-product/${id}`,
+      method: "GET",
+    })
+      .then((res) => {
+        setFormValues("name", res?.data?.name);
+        setFormValues("description", res?.data?.description);
+        setFormValues("price", res?.data?.price);
+        setdisplayImages(res?.data?.image);
+        setEditedId(id);
+      })
+      .catch((error: any) => {
+        console.log(error);
+      });
+  };
+
+  if (isLoading || isRefetching) {
+    return <Loading />;
+  }
+
   return (
     <section className="p-2 md:p-5 flex flex-col">
+      <header>
+        <h1 className="text-3xl font-semibold capitalize">Products</h1>
+      </header>
       <div className="my-5 w-72 self-end">
         <Button
           onClick={handleOpen}
@@ -95,11 +159,13 @@ const UsersProduct = () => {
         />
         <ModalWrapper openModal={openModal} handleClose={handleClose}>
           <div>
-            <h1 className="text-xl font-bold mb-5">Create new category</h1>
+            <h1 className="text-xl font-bold mb-5">
+              {editedId ? "Edit" : "Create"} new category
+            </h1>
           </div>
           <div>
             <form
-              onSubmit={handleSubmit(onSubmit)}
+              onSubmit={handleSubmit(editedId ? onEdit : onSubmit)}
               className="flex flex-col gap-2 items-center"
             >
               <Avatar
@@ -122,7 +188,11 @@ const UsersProduct = () => {
               />
               <p>{errors.description?.message}</p>
 
-              <Button label="Submit" className="w-full rounded-sm mt-2" />
+              <Button
+                isLoading={loading.add}
+                label="Submit"
+                className="w-full rounded-sm mt-2"
+              />
             </form>
           </div>
         </ModalWrapper>
@@ -131,6 +201,10 @@ const UsersProduct = () => {
         title={TITLES}
         data={data?.data}
         hasActions={true}
+        onEdit={async (id: string | number) => {
+          getData(id);
+          handleOpen();
+        }}
         onDelete={onDelete}
       />
     </section>

@@ -10,12 +10,13 @@ import { useGetData } from "@/hooks/useGetData";
 import Cookies from "js-cookie";
 import Loading from "@/components/Loading";
 import QRCode from "react-qr-code";
+import ChangePassword from "../component/ChangePassword";
 
 const Settings = () => {
   // ------------ hooks -------------
   const inputRef: any = useRef(null);
   const [image, setImage] = useState<any>(null);
-  const { mutateAsync } = useMutate();
+  const { mutateAsync, isPending } = useMutate();
   const [displayImages, setdisplayImages] = useState<any>(null);
   const { data, refetch, isRefetching, isLoading } = useGetData(
     `/user/${Cookies.get("userId")}`
@@ -40,7 +41,12 @@ const Settings = () => {
     mutateAsync({
       url: `/user/${Cookies.get("userId")}`,
       method: "PUT",
-      body: { ...data, image, id: Cookies.get("userId") },
+      body: {
+        username: data.username,
+        email: data.email,
+        image,
+        id: Cookies.get("userId"),
+      },
     })
       .then(() => {
         refetch();
@@ -73,63 +79,59 @@ const Settings = () => {
 
   return (
     <section className="p-2 md:px-5 w-full">
-      <header>
-        <h1 className="text-3xl font-semibold capitalize">Settings</h1>
-      </header>
-      <div className="mt-5 ">
-        <div className="divider"></div>
-        <p className="text-2xl font-semibold">Update your profile</p>
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="flex flex-col gap-5 items-center mt-5"
-        >
-          <Avatar
-            displayImages={displayImages}
-            setDisplayImages={setdisplayImages}
-            setValue={setImage}
-          />
-          <p className=" font-semibold">Upload new avatar</p>
+      <p className="text-2xl font-semibold">Update your profile</p>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col gap-5 items-center mt-5"
+      >
+        <Avatar
+          displayImages={displayImages}
+          setDisplayImages={setdisplayImages}
+          setValue={setImage}
+        />
+        <p className=" font-semibold">Upload new avatar</p>
 
-          <p className="underline text-gray cursor-pointer pb-5 font-semibold">
-            Update your password?
-          </p>
-          <div>
-            <p className="font-semibold pb-3">Your restaurant link</p>
-            <input
-              type="text"
-              ref={inputRef}
+        <ChangePassword />
+
+        <div>
+          <div className="flex justify-center">
+            <QRCode
               value={
                 import.meta.env.VITE_BASE_FRONTEND_URL +
                 `/customer/${data?.data?.id}`
               }
-              readOnly
-              onClick={copyContent}
-              className="input input-bordered w-full input-md rounded-sm bg-softGray text-gray cursor-pointer w-full sm:w-[450px]"
+              size={250}
             />
-            <p className="font-semibold pb-3 pt-3">QR Code</p>
-            <div className="flex justify-center">
-              <QRCode
-                value={
-                  import.meta.env.VITE_BASE_FRONTEND_URL +
-                  `/customer/${data?.data?.id}`
-                }
-                size={300}
-              />
-            </div>
           </div>
-          <div className="flex flex-col items-start gap-2">
-            <div>
-              <TextInput placeholder="username..." {...register("username")} />
-              <p>{errors.username?.message}</p>
-            </div>
-            <div>
-              <TextInput placeholder="Email Address" {...register("email")} />
-              <p>{errors.email?.message}</p>
-            </div>
-            <Button label="Save changes" className="w-full rounded-sm " />
+        </div>
+        <div className="flex flex-col items-start gap-2">
+          <p className="font-semibold pb-1">Your restaurant link</p>
+          <input
+            type="text"
+            ref={inputRef}
+            value={
+              import.meta.env.VITE_BASE_FRONTEND_URL +
+              `/customer/${data?.data?.id ? data?.data?.id : ""}`
+            }
+            readOnly
+            onClick={copyContent}
+            className="input input-bordered w-full input-md rounded-sm bg-softGray text-gray cursor-pointer w-full sm:w-[450px]"
+          />
+          <div>
+            <TextInput placeholder="username..." {...register("username")} />
+            <p>{errors.username?.message}</p>
           </div>
-        </form>
-      </div>
+          <div>
+            <TextInput placeholder="Email Address" {...register("email")} />
+            <p>{errors.email?.message}</p>
+          </div>
+          <Button
+            isLoading={isPending}
+            label="Save changes"
+            className="w-full rounded-sm "
+          />
+        </div>
+      </form>
     </section>
   );
 };
