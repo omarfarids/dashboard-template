@@ -2,6 +2,7 @@ import Loading from "@/components/Loading";
 import Table from "@/components/Table";
 import { useGetData } from "@/hooks/useGetData";
 import { useMutate } from "@/hooks/useMutate";
+import { handleSubscriptionDate } from "@/utils/functions";
 import { useState } from "react";
 import { SubmitHandler } from "react-hook-form";
 
@@ -9,6 +10,8 @@ const TITLES: any = [
   { label: "Image", key: "image", type: "image" },
   { label: "Restaurant", key: "username", type: "text" },
   { label: "Email", key: "email", type: "text" },
+  { label: "Subscription", key: "subscription", type: "text" },
+  { label: "Status", key: "status", type: "text" },
 ];
 
 const Dashboard = () => {
@@ -49,7 +52,18 @@ const Dashboard = () => {
       <div className="my-5">
         <Table
           title={TITLES}
-          data={data?.data}
+          data={data?.data?.map((item: any) => {
+            return {
+              ...item,
+              subscription: item?.isActive
+                ? handleSubscriptionDate(
+                    item?.subscriptionDate,
+                    item?.expiration
+                  )?.split("T")[0]
+                : "Expired",
+              status: item?.isActive ? "Active" : "Inactive",
+            };
+          })}
           isNavigatable={true}
           hasActions={true}
           onDelete={onDelete}

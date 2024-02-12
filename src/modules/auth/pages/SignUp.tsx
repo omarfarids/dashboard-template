@@ -17,6 +17,7 @@ const SignUp = () => {
   const schema = yup.object().shape({
     username: yup.string().required("Username is a required field"),
     email: yup.string().email().required("Email is a required field"),
+    phone: yup.string().required("Phone number is a required field"),
     password: yup.string().required("Password is a required field"),
     confirmPassword: yup
       .string()
@@ -64,6 +65,8 @@ const SignUp = () => {
         <p>{errors.username?.message}</p>
         <TextInput placeholder="Email Address" {...register("email")} />
         <p>{errors.email?.message}</p>
+        <TextInput placeholder="Phone number" {...register("phone")} />
+        <p>{errors.phone?.message}</p>
         <TextInput
           placeholder="Password"
           type="password"
