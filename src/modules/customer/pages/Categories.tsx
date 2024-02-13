@@ -2,6 +2,9 @@ import { useGetData } from "@/hooks/useGetData";
 import { useNavigate, useParams } from "react-router-dom";
 import dummyProduct from "@/assets/product.webp";
 import Loading from "@/components/Loading";
+import { useEffect } from "react";
+import { setRestaurantInfo } from "@/store/reducers/globalReducer";
+import { useDispatch } from "react-redux";
 
 const Categories = () => {
   const navigate = useNavigate();
@@ -9,8 +12,13 @@ const Categories = () => {
   const { data, isLoading, isRefetching } = useGetData(
     `/customer/category/${userId}?userId=${userId}`
   );
-  const userNumber = data?.user?.phone;
-  localStorage.setItem("userNumber", userNumber);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (data?.user) {
+      dispatch(setRestaurantInfo(data?.user));
+    }
+  }, [data]);
 
   return (
     <div

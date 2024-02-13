@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 
 export interface globalReducer {
   user: any;
+  restaurantInfo: any;
 }
 
 const initialState: globalReducer = {
@@ -13,6 +14,7 @@ const initialState: globalReducer = {
     userId: Cookies.get("userId"),
     role: Cookies.get("role"),
   },
+  restaurantInfo: null,
 };
 
 export const globalSlice = createSlice({
@@ -37,10 +39,14 @@ export const globalSlice = createSlice({
         role: null,
       };
     },
+    setRestaurantInfo: (state, action) => {
+      state.restaurantInfo = action.payload;
+    },
   },
 });
 // Action creators are generated for each case reducer function
 
-export const { registerUser, logoutUser } = globalSlice.actions;
+export const { registerUser, logoutUser, setRestaurantInfo } =
+  globalSlice.actions;
 
 export default globalSlice.reducer;
