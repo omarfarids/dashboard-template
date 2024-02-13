@@ -16,8 +16,8 @@ const TITLES: any = [
   { label: "Image", key: "image", type: "image" },
   { label: "Name", key: "name", type: "text" },
   { label: "Description", key: "description", type: "text" },
-  { label: "Created at", key: "createdAt", type: "text" },
-  { label: "Update at", key: "updatedAt", type: "text" },
+  { label: "Created at", key: "createdAt", type: "date" },
+  { label: "Update at", key: "updatedAt", type: "date" },
   { label: "Price", key: "price", type: "text" },
 ];
 
@@ -91,7 +91,7 @@ const Products = () => {
   const onDelete: SubmitHandler<any> = (data: any) => {
     setLoading((prev: any) => ({ ...prev, delete: true }));
     mutateAsync({
-      url: `/product/${data?._id}`,
+      url: `/product/${data}`,
       method: "DELETE",
     })
       .then(async () => {
@@ -178,7 +178,7 @@ const Products = () => {
               <p>{errors.name?.message}</p>
               <TextInput
                 placeholder="Price"
-                className="w-full sm:w-[100px] input input-bordered"
+                className="w-full sm:wح-[100px] input input-bordered"
                 {...register("price")}
               />
               <p>{errors.price?.message}</p>

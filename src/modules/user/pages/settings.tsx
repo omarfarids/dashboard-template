@@ -93,30 +93,37 @@ const Settings = () => {
 
         <ChangePassword />
 
-        <div>
-          <div className="flex justify-center">
-            <QRCode
-              value={
-                import.meta.env.VITE_BASE_FRONTEND_URL +
-                `/customer/${data?.data?.id}`
-              }
-              size={250}
-            />
+        {!data?.data?._doc?.isAdmin && (
+          <div>
+            <div className="flex justify-center">
+              <QRCode
+                value={
+                  import.meta.env.VITE_BASE_FRONTEND_URL +
+                  `/customer/${data?.data?.id}`
+                }
+                size={250}
+              />
+            </div>
           </div>
-        </div>
+        )}
         <div className="flex flex-col items-start gap-2">
-          <p className="font-semibold pb-1">Your restaurant link</p>
-          <input
-            type="text"
-            ref={inputRef}
-            value={
-              import.meta.env.VITE_BASE_FRONTEND_URL +
-              `/customer/${data?.data?.id ? data?.data?.id : ""}`
-            }
-            readOnly
-            onClick={copyContent}
-            className="input input-bordered w-full input-md rounded-sm bg-softGray text-gray cursor-pointer w-full sm:w-[450px]"
-          />
+          {!data?.data?._doc?.isAdmin && (
+            <>
+              {" "}
+              <p className="font-semibold pb-1">Your restaurant link</p>
+              <input
+                type="text"
+                ref={inputRef}
+                value={
+                  import.meta.env.VITE_BASE_FRONTEND_URL +
+                  `/customer/${data?.data?.id ? data?.data?.id : ""}`
+                }
+                readOnly
+                onClick={copyContent}
+                className="input input-bordered w-full input-md rounded-sm bg-softGray text-gray cursor-pointer w-full sm:w-[450px]"
+              />
+            </>
+          )}
           <div>
             <TextInput placeholder="username..." {...register("username")} />
             <p>{errors.username?.message}</p>

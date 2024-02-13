@@ -16,8 +16,8 @@ const TITLES: any = [
   { label: "Image", key: "image", type: "image" },
   { label: "Name", key: "name", type: "text" },
   { label: "Description", key: "description", type: "text" },
-  { label: "Created at", key: "createdAt", type: "text" },
-  { label: "Update at", key: "updatedAt", type: "text" },
+  { label: "Created at", key: "createdAt", type: "date" },
+  { label: "Update at", key: "updatedAt", type: "date" },
 ];
 
 const Category = () => {

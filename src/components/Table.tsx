@@ -61,6 +61,8 @@ const Table = ({
                               }
                               alt="avatar"
                             />
+                          ) : x?.type === "date" ? (
+                            item?.[x?.key]?.split("T")[0] || "-"
                           ) : (
                             item?.[x?.key] || "-"
                           )}
@@ -79,7 +81,7 @@ const Table = ({
                         )}
                         {onDelete && (
                           <button
-                            onClick={() => onDelete(item)}
+                            onClick={() => onDelete(item._id)}
                             className="btn btn-outline btn-error"
                           >
                             Delete
@@ -92,6 +94,9 @@ const Table = ({
               })}
           </tbody>
         </table>
+        {!data || !data?.length ? (
+          <div className="p-5 text-center font-bold">No Data to display!</div>
+        ) : null}
       </div>
     </div>
   );
