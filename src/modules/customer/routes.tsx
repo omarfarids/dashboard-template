@@ -8,7 +8,7 @@ export default [
     name: "Categories",
   },
   {
-    path: "/customer/products/:categoryId",
+    path: "/customer/products/:categoryId/:userId",
     element: <Products />,
     name: "Products",
   },

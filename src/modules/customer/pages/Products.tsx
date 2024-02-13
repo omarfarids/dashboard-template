@@ -10,8 +10,9 @@ const Products = () => {
   // ------------- hooks -------------
   const navigate = useNavigate();
   const { categoryId } = useParams();
+  const { userId } = useParams();
   const { data, isLoading, isRefetching } = useGetData(
-    `/customer/product/${categoryId}`
+    `/customer/product/${categoryId}?userId=${userId}`
   );
   const cartItems = useSelector((state: any) => state?.cart?.cartItems);
   const dispatch = useDispatch();
