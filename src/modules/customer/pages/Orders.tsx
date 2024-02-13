@@ -3,16 +3,17 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import dammyProduct from "@/assets/product.webp";
 import { Link } from "react-router-dom";
-import { number } from "yup";
 
 const Orders = () => {
+  // ------------- hooks -------------
   const [price, setPrice] = useState(0);
   const dispatch = useDispatch();
   const cartItems = useSelector((state: any) => state?.cart?.cartItems);
   const [orderMessage, setOrderMessage] = useState("Cart%20is%20empty");
   const [additional, setAdditional] = useState("");
-  const Number = localStorage.getItem("userNumber") || 1;
-  console.log(Number);
+  const user = useSelector((state: any) => state?.global?.restaurantInfo);
+
+  // ------------- function -------------
 
   const incrementPrice = (id: any) => {
     const newCartItems = cartItems.map((item: any) => {
@@ -38,6 +39,8 @@ const Orders = () => {
     });
     dispatch(setCartItems(newCartItems));
   };
+
+  // ----------- side effects --------------
 
   useEffect(() => {
     const total = cartItems?.reduce(
@@ -156,7 +159,7 @@ const Orders = () => {
         </div>
         <div className="card card-compact  bg-base-100 shadow-xl flex flex-row w-full h-40 mt-5">
           <div
-            className="card  bg-base-100 shadow-xl flex justify-center w-full 
+            className="card bg-base-100 shadow-xl flex justify-center w-full 
          "
           >
             <div className=" flex justify-items-center justify-center gap-5 ">
@@ -169,8 +172,9 @@ const Orders = () => {
             </div>
 
             <Link
-              to={`https://wa.me/${Number}/?text=${orderMessage}`}
-              className="btn link-accent  mt-3"
+              to={`https://wa.me/${user?.phone}/?text=${orderMessage}`}
+              target="_blank"
+              className="btn link-accent  m-3"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

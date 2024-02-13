@@ -9,8 +9,7 @@ import Loading from "@/components/Loading";
 const Products = () => {
   // ------------- hooks -------------
   const navigate = useNavigate();
-  const { categoryId } = useParams();
-  const { userId } = useParams();
+  const { categoryId, userId } = useParams();
   const { data, isLoading, isRefetching } = useGetData(
     `/customer/product/${categoryId}?userId=${userId}`
   );
