@@ -7,7 +7,7 @@ const Categories = () => {
   const navigate = useNavigate();
   const { userId } = useParams();
   const { data, isLoading, isRefetching } = useGetData(
-    `/customer/category/${userId}`
+    `/customer/category/${userId}?userId=${userId}`
   );
 
   return (
@@ -44,7 +44,7 @@ const Categories = () => {
                 key={item?._id}
                 className="card card-compact w-80 bg-base-100 shadow-xl hover:opacity-80 cursor-pointer"
                 onClick={() => {
-                  navigate(`/customer/products/${item?._id}`);
+                  navigate(`/customer/products/${item?._id}/${userId}`);
                 }}
               >
                 <figure>

@@ -9,6 +9,7 @@ const Orders = () => {
   const dispatch = useDispatch();
   const cartItems = useSelector((state: any) => state?.cart?.cartItems);
   const [orderMessage, setOrderMessage] = useState("Cart%20is%20empty");
+  const [additional, setAdditional] = useState("");
 
   const incrementPrice = (id: any) => {
     const newCartItems = cartItems.map((item: any) => {
@@ -44,9 +45,12 @@ const Orders = () => {
 
     const message = cartItems
       ?.map((item: any) => `${item.name}: ${item.quantity}`)
-      .join(", ");
-    setOrderMessage(`${message}/ Total: ${total}`.split(" ")?.join("%20"));
-  }, [cartItems]);
+      .join("\n");
+    const MergMessage = encodeURIComponent(
+      `${message} \n Total: ${total} \n Additional: ${additional}`
+    );
+    setOrderMessage(MergMessage);
+  }, [cartItems, additional]);
 
   return (
     <div
@@ -156,12 +160,13 @@ const Orders = () => {
               <textarea
                 placeholder="additional notes ..."
                 className="textarea textarea-bordered textarea-xs w-full max-w-xs "
+                onChange={(e) => setAdditional(e.target.value)}
               ></textarea>
               <p className="font-bold ">Total amount : {price}</p>
             </div>
 
             <Link
-              to={`https://wa.me/01099913538/?text=${orderMessage}`}
+              to={`https://wa.me/+201154457440/?text=${orderMessage}`}
               className="btn link-accent  mt-3"
             >
               <svg
