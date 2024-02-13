@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import dammyProduct from "@/assets/product.webp";
 import { Link } from "react-router-dom";
+import { number } from "yup";
 
 const Orders = () => {
   const [price, setPrice] = useState(0);
@@ -10,6 +11,8 @@ const Orders = () => {
   const cartItems = useSelector((state: any) => state?.cart?.cartItems);
   const [orderMessage, setOrderMessage] = useState("Cart%20is%20empty");
   const [additional, setAdditional] = useState("");
+  const Number = localStorage.getItem("userNumber") || 1;
+  console.log(Number);
 
   const incrementPrice = (id: any) => {
     const newCartItems = cartItems.map((item: any) => {
@@ -166,7 +169,7 @@ const Orders = () => {
             </div>
 
             <Link
-              to={`https://wa.me/+201154457440/?text=${orderMessage}`}
+              to={`https://wa.me/${Number}/?text=${orderMessage}`}
               className="btn link-accent  mt-3"
             >
               <svg
