@@ -52,18 +52,20 @@ const Dashboard = () => {
       <div className="my-5">
         <Table
           title={TITLES}
-          data={data?.data?.map((item: any) => {
-            return {
-              ...item,
-              subscription: item?.isActive
-                ? handleSubscriptionDate(
-                    item?.subscriptionDate,
-                    item?.expiration
-                  )?.split("T")[0]
-                : "Expired",
-              status: item?.isActive ? "Active" : "Inactive",
-            };
-          })}
+          data={data?.data
+            ?.filter((item: any) => !item?.isAdmin)
+            ?.map((item: any) => {
+              return {
+                ...item,
+                subscription: item?.isActive
+                  ? handleSubscriptionDate(
+                      item?.subscriptionDate,
+                      item?.expiration
+                    )?.split("T")[0]
+                  : "Expired",
+                status: item?.isActive ? "Active" : "Inactive",
+              };
+            })}
           isNavigatable={true}
           hasActions={true}
           onDelete={onDelete}

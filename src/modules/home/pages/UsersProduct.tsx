@@ -16,8 +16,8 @@ const TITLES: any = [
   { label: "Image", key: "image", type: "image" },
   { label: "Name", key: "name", type: "text" },
   { label: "Description", key: "description", type: "text" },
-  { label: "Created at", key: "createdAt", type: "text" },
-  { label: "Update at", key: "updatedAt", type: "text" },
+  { label: "Created at", key: "createdAt", type: "date" },
+  { label: "Update at", key: "updatedAt", type: "date" },
   { label: "Price", key: "price", type: "text" },
 ];
 
@@ -90,7 +90,7 @@ const UsersProduct = () => {
   const onDelete: SubmitHandler<any> = (data: any) => {
     setLoading((prev: any) => ({ ...prev, delete: true }));
     mutateAsync({
-      url: `/product/${data?._id}`,
+      url: `/product/${data}`,
       method: "DELETE",
     })
       .then(async () => {
