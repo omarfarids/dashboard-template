@@ -23,6 +23,7 @@ const Settings = () => {
   );
 
   const schema = yup.object().shape({
+    phone: yup.string().required("Phone number is a required field"),
     username: yup.string().required("Username is a required field"),
     email: yup.string().email().required("Email is a required field"),
   });
@@ -42,6 +43,7 @@ const Settings = () => {
       url: `/user/${Cookies.get("userId")}`,
       method: "PUT",
       body: {
+        phone: data.phone,
         username: data.username,
         email: data.email,
         image,
@@ -67,6 +69,7 @@ const Settings = () => {
   // ------------- useEffect ------------
   useEffect(() => {
     if (data?.data) {
+      setValue("phone", data?.data?.phone);
       setValue("username", data?.data?.username);
       setValue("email", data?.data?.email);
       setdisplayImages(data?.data?.image);
@@ -124,6 +127,13 @@ const Settings = () => {
               />
             </>
           )}
+          <div>
+            <TextInput
+              placeholder="Number ex(+20111155555)"
+              {...register("phone")}
+            />
+            <p>{errors.username?.message}</p>
+          </div>
           <div>
             <TextInput placeholder="username..." {...register("username")} />
             <p>{errors.username?.message}</p>
