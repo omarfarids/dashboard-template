@@ -65,7 +65,10 @@ const SignUp = () => {
         <p>{errors.username?.message}</p>
         <TextInput placeholder="Email Address" {...register("email")} />
         <p>{errors.email?.message}</p>
-        <TextInput placeholder="Phone number" {...register("phone")} />
+        <TextInput
+          placeholder="Number ex(+20111155555)"
+          {...register("phone")}
+        />
         <p>{errors.phone?.message}</p>
         <TextInput
           placeholder="Password"

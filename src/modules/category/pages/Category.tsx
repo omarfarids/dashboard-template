@@ -54,7 +54,7 @@ const Category = () => {
     setEditedId(null);
     setOpenModal(false);
   };
-  console.log(data);
+  console.log(categoryId);
   const {
     register,
     handleSubmit,
@@ -63,7 +63,7 @@ const Category = () => {
   }: any = useForm({
     resolver: yupResolver(schema),
   });
-  const onDelete: SubmitHandler<any> = () => {
+  const onDelete: SubmitHandler<any> = (categoryId) => {
     setLoading((prev: any) => ({ ...prev, delete: true }));
     mutateAsync({
       url: `/category/${categoryId._id}`,
@@ -143,6 +143,9 @@ const Category = () => {
 
   return (
     <section className="p-2 md:p-5 flex flex-col">
+      <header>
+        <h1 className="text-3xl font-semibold capitalize">Category</h1>
+      </header>
       <div className="my-5 w-72 self-end">
         <Button
           onClick={handleOpen}
