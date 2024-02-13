@@ -9,6 +9,8 @@ const Categories = () => {
   const { data, isLoading, isRefetching } = useGetData(
     `/customer/category/${userId}?userId=${userId}`
   );
+  const userNumber = data?.user?.phone;
+  localStorage.setItem("userNumber", userNumber);
 
   return (
     <div
