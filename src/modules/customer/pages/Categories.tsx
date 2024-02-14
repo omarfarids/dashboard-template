@@ -5,11 +5,12 @@ import Loading from "@/components/Loading";
 import { useEffect } from "react";
 import { setRestaurantInfo } from "@/store/reducers/globalReducer";
 import { useDispatch } from "react-redux";
+import { notify } from "@/utils/notify";
 
 const Categories = () => {
   const navigate = useNavigate();
   const { userId } = useParams();
-  const { data, isLoading, isRefetching } = useGetData(
+  const { data, isLoading, isRefetching, isError } = useGetData(
     `/customer/category/${userId}?userId=${userId}`
   );
   const dispatch = useDispatch();
@@ -19,6 +20,12 @@ const Categories = () => {
       dispatch(setRestaurantInfo(data?.user));
     }
   }, [data]);
+
+  useEffect(() => {
+    if (isError) {
+      notify("User subscription has expired", "error");
+    }
+  }, [isError]);
 
   return (
     <div
