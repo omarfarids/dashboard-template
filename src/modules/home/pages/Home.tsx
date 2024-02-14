@@ -3,7 +3,6 @@ import Table from "@/components/Table";
 import { useGetData } from "@/hooks/useGetData";
 import { useMutate } from "@/hooks/useMutate";
 import { handleSubscriptionDate } from "@/utils/functions";
-import { useState } from "react";
 import { SubmitHandler } from "react-hook-form";
 
 const TITLES: any = [
@@ -17,23 +16,16 @@ const TITLES: any = [
 const Dashboard = () => {
   // ------------ hooks -------------
   const { data, isLoading, isRefetching, refetch } = useGetData(`/user`);
-  const [setLoading] = useState<any>({
-    add: false,
-    edit: false,
-    delete: false,
-  });
   const { mutateAsync } = useMutate();
 
   // --------------- function ----------------
   const onDelete: SubmitHandler<any> = (data: any) => {
-    setLoading((prev: any) => ({ ...prev, delete: true }));
     mutateAsync({
-      url: `/user/${data?._id}`,
+      url: `/user/${data}`,
       method: "DELETE",
     })
       .then(async () => {
         await refetch();
-        setLoading((prev: any) => ({ ...prev, delete: false }));
       })
       .catch((error: any) => {
         console.log(error);
