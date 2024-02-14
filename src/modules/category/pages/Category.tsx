@@ -63,10 +63,10 @@ const Category = () => {
   }: any = useForm({
     resolver: yupResolver(schema),
   });
-  const onDelete: SubmitHandler<any> = (categoryId) => {
+  const onDelete: SubmitHandler<any> = (data) => {
     setLoading((prev: any) => ({ ...prev, delete: true }));
     mutateAsync({
-      url: `/category/${categoryId._id}`,
+      url: `/category/${data}`,
       method: "DELETE",
     })
       .then(async () => {

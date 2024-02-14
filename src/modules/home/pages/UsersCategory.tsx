@@ -30,6 +30,7 @@ const UsersCategory = () => {
     edit: false,
     delete: false,
   });
+  const [subscriptionPeriod, setSubscriptionPeriod] = useState<any>(null);
   const { data, refetch, isRefetching, isLoading } = useGetData(
     `/category/${param.userId}`
   );
@@ -41,7 +42,6 @@ const UsersCategory = () => {
     name: yup.string().required("Name is a required field"),
     description: yup.string().required("Description is a required field"),
   });
-  const categoryId = data?.data?.[0]?._id;
   // -------------- functions ----------------
   const handleOpen = () => {
     setFormValues("name", "");
@@ -63,10 +63,10 @@ const UsersCategory = () => {
     resolver: yupResolver(schema),
   });
 
-  const onDelete: SubmitHandler<any> = () => {
+  const onDelete: SubmitHandler<any> = (data) => {
     setLoading((prev: any) => ({ ...prev, delete: true }));
     mutateAsync({
-      url: `/category/${categoryId}`,
+      url: `/category/${data}`,
       method: "DELETE",
     })
       .then(async () => {
@@ -148,7 +148,92 @@ const UsersCategory = () => {
       <header>
         <h1 className="text-3xl font-semibold capitalize">Categories</h1>
       </header>
-      <div className="my-5 w-72 self-end">
+      <div className="flex flex-row my-5 justify-end gap-5">
+        {data?.user?.isActive ? (
+          <button
+            onClick={() => {
+              mutateAsync({
+                url: "/user/user-activation",
+                method: "Post",
+                body: {
+                  userId: param.userId,
+                  isActive: 0,
+                },
+              })
+                .then(() => {
+                  refetch();
+                })
+                .catch((error: any) => {
+                  console.log(error);
+                });
+            }}
+            className="btn btn-outline btn-error"
+          >
+            Deactivate user
+          </button>
+        ) : (
+          <>
+            <button
+              onClick={() =>
+                (document.getElementById("my_modal_2") as any).showModal()
+              }
+              className="btn btn-outline btn-primary"
+            >
+              Activate user
+            </button>
+            <dialog id="my_modal_2" className="modal">
+              <div className="modal-box">
+                <h3 className="font-bold text-lg">User Activation</h3>
+                <input
+                  type="number"
+                  className="input my-5 input-bordered w-full input-md rounded-sm"
+                  placeholder="Subscription period"
+                  value={subscriptionPeriod}
+                  onChange={(e: any) => {
+                    setSubscriptionPeriod(e.target.value);
+                  }}
+                />
+                <div className="flex flex-row gap-3 justify-end">
+                  {/* <form method="dialog" className="modal-backdrop"> */}
+                  <button
+                    onClick={() => {
+                      (document.getElementById("my_modal_2") as any).close();
+                    }}
+                    className="btn btn-outline btn-primary"
+                  >
+                    close
+                  </button>
+                  <button
+                    className="btn btn-primary"
+                    onClick={() => {
+                      mutateAsync({
+                        url: "/user/user-activation",
+                        method: "Post",
+                        body: {
+                          userId: param.userId,
+                          expiration: subscriptionPeriod,
+                          isActive: 1,
+                        },
+                      })
+                        .then(() => {
+                          refetch();
+                          (
+                            document.getElementById("my_modal_2") as any
+                          ).close();
+                        })
+                        .catch((error: any) => {
+                          console.log(error);
+                        });
+                    }}
+                  >
+                    Submit
+                  </button>
+                  {/* </form> */}
+                </div>
+              </div>
+            </dialog>
+          </>
+        )}
         <Button
           onClick={handleOpen}
           className="w-56"

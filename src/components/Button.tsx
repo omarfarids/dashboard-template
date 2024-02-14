@@ -11,14 +11,14 @@ const Button = ({
   icon,
   iconWrapperClassName,
   isLoading,
-  className,
+  className = "w-full",
   label,
   ...props
 }: ButtonProps) => {
   return (
     <button
       type="submit"
-      className={`btn btn-primary bg-primary-500 w-full relative capitalize text-base ${className} ${
+      className={`btn btn-primary bg-primary-500 relative capitalize text-base ${className} ${
         icon ? "justify-start" : ""
       }`}
       {...props}
