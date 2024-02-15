@@ -19,7 +19,7 @@ const Settings = () => {
   const { mutateAsync, isPending } = useMutate();
   const [displayImages, setdisplayImages] = useState<any>(null);
   const { data, refetch, isRefetching, isLoading } = useGetData(
-    `/user/${Cookies.get("userId")}`
+    `/user/${Cookies.get("username")}`
   );
 
   const schema = yup.object().shape({
@@ -40,7 +40,7 @@ const Settings = () => {
   // ------------ functions ------------
   const onSubmit: SubmitHandler<any> = (data: any) => {
     mutateAsync({
-      url: `/user/${Cookies.get("userId")}`,
+      url: `/user/${Cookies.get("username")}`,
       method: "PUT",
       body: {
         phone: data.phone,
@@ -102,7 +102,7 @@ const Settings = () => {
               <QRCode
                 value={
                   import.meta.env.VITE_BASE_FRONTEND_URL +
-                  `/customer/${data?.data?.id}`
+                  `/customer/${data?.data?.username}`
                 }
                 size={250}
               />
@@ -119,7 +119,9 @@ const Settings = () => {
                 ref={inputRef}
                 value={
                   import.meta.env.VITE_BASE_FRONTEND_URL +
-                  `/customer/${data?.data?.id ? data?.data?.id : ""}`
+                  `/customer/${
+                    data?.data?.username ? data?.data?.username : ""
+                  }`
                 }
                 readOnly
                 onClick={copyContent}
