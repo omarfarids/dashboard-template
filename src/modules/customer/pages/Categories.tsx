@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { setRestaurantInfo } from "@/store/reducers/globalReducer";
 import { useDispatch } from "react-redux";
 import { notify } from "@/utils/notify";
+import restaurantBG from "@/assets/restaurant1.jpg";
 
 const Categories = () => {
   const navigate = useNavigate();
@@ -28,20 +29,14 @@ const Categories = () => {
 
   return (
     <div>
-      <div
-        className="hero min-h-screen"
-        style={{
-          backgroundImage:
-            "url(https://s.tmimgcdn.com/scr/800x500/266300/restaurant-logo-illustrated-on-a-background_266348-original.jpg)",
-        }}
-      >
-        <div className="hero-content text-center text-neutral-content">
-          <div className="max-w-md">
-            <h1 className="mb-5 text-5xl font-bold">Welcome</h1>
-          </div>
-        </div>
+      <div className="hero min-h-screen">
+        <img
+          src={restaurantBG}
+          className="w-full cover opacity-70"
+          alt="restaurant"
+        />
       </div>
-      <div id="orders" className="min-h-screen">
+      <div id="orders" className="min-h-96">
         {isLoading || isRefetching ? (
           <Loading />
         ) : (
@@ -49,14 +44,14 @@ const Categories = () => {
             {data?.data?.map((item: any) => (
               <div
                 key={item?._id}
-                className="card card-compact w-80 bg-base-100 shadow-md hover:shadow-2xl cursor-pointer"
+                className="card card-compact w-80 bg-base-100 shadow-md hover:shadow-2xl cursor-pointer border border-gray"
                 onClick={() => {
                   navigate(`/customer/products/${item?._id}/${userId}`);
                 }}
               >
                 <figure>
                   <img
-                    className="h-60"
+                    className="h-60 border border-lightGray cover w-full"
                     src={item?.image?.length ? item?.image : dummyProduct}
                     alt="Food"
                   />

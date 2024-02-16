@@ -19,14 +19,7 @@ const Products = () => {
 
   return (
     <div>
-      <div
-        style={{
-          position: "fixed",
-          bottom: "20px",
-          right: "20px",
-          zIndex: 100,
-        }}
-      >
+      <div className="">
         <button
           className="btn btn-neutral w-fit"
           onClick={() => navigate(`/customer/orders`)}
@@ -48,7 +41,7 @@ const Products = () => {
         </button>
       </div>
 
-      <div className="min-h-screen">
+      <div className="min-h-96 mt-10">
         {isLoading || isRefetching ? (
           <Loading />
         ) : (
@@ -56,19 +49,14 @@ const Products = () => {
             {data?.data?.map((item: any) => (
               <div
                 key={item?._id}
-                className="card card-compact w-96 bg-base-100 shadow-md hover:shadow-2xl cursor-pointer"
+                className="card card-compact w-80 bg-base-100 shadow-md hover:shadow-2xl cursor-pointer border border-gray"
               >
-                <div
-                  style={{
-                    justifyTracks: "center",
-                    width: "200px",
-                    height: "150px",
-                  }}
-                >
-                  <figure className="h-full w-full ">
+                <div>
+                  <figure>
                     <img
                       src={item?.image?.length ? item?.image : dammyProduct}
                       alt="Food"
+                      className="h-60 border border-lightGray cover w-full"
                     />
                   </figure>
                 </div>
