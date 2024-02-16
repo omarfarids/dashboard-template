@@ -54,7 +54,7 @@ const Category = () => {
     setEditedId(null);
     setOpenModal(false);
   };
-  console.log(categoryId);
+  console.log(editedId);
   const {
     register,
     handleSubmit,
