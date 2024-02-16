@@ -131,7 +131,7 @@ const Settings = () => {
           )}
           <div>
             <TextInput
-              placeholder="Number ex(+20111155555)"
+              placeholder="Number ex(+964xxxxxxxxxx...)"
               {...register("phone")}
             />
             <p>{errors.username?.message}</p>
