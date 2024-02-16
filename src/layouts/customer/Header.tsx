@@ -16,10 +16,14 @@ const Header = () => {
     setPrice(total);
   }, [cartItems]);
 
+  console.log(user);
+
   return (
-    <div className="navbar bg-base-100">
+    <div className="navbar bg-base-100 fixed bg-white z-10 shadow-md">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">Logo</a>
+        {user?.image?.length ? (
+          <img className="w-8" src={user?.image} alt="avatar" />
+        ) : null}
       </div>
 
       <div className="flex-none">
