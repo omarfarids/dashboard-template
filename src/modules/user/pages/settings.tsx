@@ -27,7 +27,7 @@ const Settings = () => {
     username: yup.string().required("Username is a required field"),
     email: yup.string().email().required("Email is a required field"),
   });
-
+  console.log(data);
   const {
     register,
     handleSubmit,
@@ -96,7 +96,7 @@ const Settings = () => {
 
         <ChangePassword />
 
-        {!data?.data?._doc?.isAdmin && (
+        {!data?.data?.isAdmin && (
           <div>
             <div className="flex justify-center">
               <QRCode
@@ -110,7 +110,7 @@ const Settings = () => {
           </div>
         )}
         <div className="flex flex-col items-start gap-2">
-          {!data?.data?._doc?.isAdmin && (
+          {!data?.data?.isAdmin && (
             <>
               {" "}
               <p className="font-semibold pb-1">Your restaurant link</p>
