@@ -3,7 +3,7 @@ import Header from "./Header";
 
 const CusomerLayout = () => {
   return (
-    <div>
+    <div className="">
       <Header />
       <Outlet />
     </div>

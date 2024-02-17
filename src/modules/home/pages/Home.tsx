@@ -15,7 +15,7 @@ const TITLES: any = [
 
 const Dashboard = () => {
   // ------------ hooks -------------
-  const { data, isLoading, isRefetching, refetch } = useGetData(`/user`);
+  const { data, isLoading, refetch } = useGetData(`/user`, "adminRestaurants");
   const { mutateAsync } = useMutate();
 
   // --------------- function ----------------
@@ -32,7 +32,7 @@ const Dashboard = () => {
       });
   };
 
-  if (isLoading || isRefetching) {
+  if (isLoading) {
     return <Loading />;
   }
 
