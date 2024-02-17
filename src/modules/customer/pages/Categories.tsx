@@ -6,13 +6,14 @@ import { useEffect } from "react";
 import { setRestaurantInfo } from "@/store/reducers/globalReducer";
 import { useDispatch } from "react-redux";
 import { notify } from "@/utils/notify";
-import restaurantBG from "@/assets/restaurant1.jpg";
+import restaurantBG from "@/assets/restaurant2.jpg";
 
 const Categories = () => {
   const navigate = useNavigate();
   const { userId } = useParams();
-  const { data, isLoading, isRefetching, isError } = useGetData(
-    `/customer/category/${userId}?userId=${userId}`
+  const { data, isLoading, isError } = useGetData(
+    `/customer/category/${userId}?userId=${userId}`,
+    "restaurantCategories"
   );
   const dispatch = useDispatch();
   useEffect(() => {
@@ -32,12 +33,17 @@ const Categories = () => {
       <div className="hero min-h-screen">
         <img
           src={restaurantBG}
-          className="w-full cover opacity-70"
+          className="w-full cover opacity-60 shadow-md"
           alt="restaurant"
         />
+        <p className="w-1/2 text-3xl font-bold text-center text-white">
+          "Indulge in our culinary creations, where each dish is crafted with
+          passion, offering flavors that dance on your palate and memories that
+          linger long after."
+        </p>
       </div>
       <div id="orders" className="min-h-96">
-        {isLoading || isRefetching ? (
+        {isLoading ? (
           <Loading />
         ) : (
           <div className="flex flex-row flex-wrap justify-start gap-5 m-5">
