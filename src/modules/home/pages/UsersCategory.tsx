@@ -31,8 +31,9 @@ const UsersCategory = () => {
     delete: false,
   });
   const [subscriptionPeriod, setSubscriptionPeriod] = useState<any>(null);
-  const { data, refetch, isRefetching, isLoading } = useGetData(
-    `/category/${param.userId}`
+  const { data, refetch, isLoading } = useGetData(
+    `/category/${param.userId}`,
+    `adminCategories-${param.userId}`
   );
   const [value, setValue] = useState<any>(null);
   const [displayImages, setdisplayImages] = useState<any>(null);
@@ -139,7 +140,7 @@ const UsersCategory = () => {
 
   //   ------------ side effects ------------
 
-  if (isLoading || isRefetching) {
+  if (isLoading) {
     return <Loading />;
   }
 

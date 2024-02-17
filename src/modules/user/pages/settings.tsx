@@ -18,8 +18,9 @@ const Settings = () => {
   const [image, setImage] = useState<any>(null);
   const { mutateAsync, isPending } = useMutate();
   const [displayImages, setdisplayImages] = useState<any>(null);
-  const { data, refetch, isRefetching, isLoading } = useGetData(
-    `/user/${Cookies.get("username")}`
+  const { data, refetch, isLoading } = useGetData(
+    `/user/${Cookies.get("username")}`,
+    `userSettings-${Cookies.get("username")}`
   );
 
   const schema = yup.object().shape({
@@ -76,7 +77,7 @@ const Settings = () => {
     }
   }, [data]);
 
-  if (isLoading || isRefetching) {
+  if (isLoading) {
     return <Loading />;
   }
 
