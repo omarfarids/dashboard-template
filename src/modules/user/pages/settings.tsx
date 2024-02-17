@@ -28,7 +28,7 @@ const Settings = () => {
     username: yup.string().required("Username is a required field"),
     email: yup.string().email().required("Email is a required field"),
   });
-
+  console.log(data);
   const {
     register,
     handleSubmit,
