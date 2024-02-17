@@ -60,7 +60,10 @@ const Orders = () => {
 
   return (
     <div>
-      <div className="flex flex-col flex-wrap items-center justify-start gap-5 pt-20">
+      <div
+        className="flex flex-col flex-wrap items-center justify-start gap-5 pt-20"
+        style={{ direction: "rtl" }}
+      >
         {cartItems?.map((item: any) => (
           <div className="card card-compact border border-gray bg-base-100 shadow-xl flex flex-col w-4/5 md:w-2/5 md:flex-row mx-5 gap-5 md:gap-20">
             <div className="m-3">
@@ -73,8 +76,8 @@ const Orders = () => {
             </div>
             <div className="card-body flex flex-col items-center md:items-end justify-end gap-5">
               <div className="flex flex-row gap-5 font-bold">
-                <p>Price : {item?.price} </p>
-                <p>Quantity : {item?.quantity}</p>
+                <p>السعر : {item?.price} </p>
+                <p>الكمية : {item?.quantity}</p>
               </div>
               <div className="card-actions justify-center md:justify-end">
                 <button
@@ -140,10 +143,13 @@ const Orders = () => {
           </div>
         ))}
       </div>
-      <div className="card card-compact gap-5 bg-base-100 shadow-xl md:w-1/2 mx-auto my-5 p-5 border border-base-300 card bg-base-100 shadow-xl flex justify-center">
-        <p className="font-bold text-[40px]">Total Price : {price}</p>
+      <div
+        style={{ direction: "rtl" }}
+        className="card card-compact gap-5 bg-base-100 shadow-xl md:w-1/2 mx-auto my-5 p-5 border border-base-300 card bg-base-100 shadow-xl flex justify-center"
+      >
+        <p className="font-bold text-[40px]">السعر الكلي : {price}</p>
         <textarea
-          placeholder="additional notes ..."
+          placeholder="معلومات اضافية ..."
           className="textarea textarea-bordered textarea-xs w-full max-w-xs "
           onChange={(e) => setAdditional(e.target.value)}
         ></textarea>
@@ -167,7 +173,7 @@ const Orders = () => {
               d="M12 20.25c4.97 0 9-3.694 9-8.25s-4.03-8.25-9-8.25S3 7.444 3 12c0 2.104.859 4.023 2.273 5.48.432.447.74 1.04.586 1.641a4.483 4.483 0 0 1-.923 1.785A5.969 5.969 0 0 0 6 21c1.282 0 2.47-.402 3.445-1.087.81.22 1.668.337 2.555.337Z"
             />
           </svg>{" "}
-          Order Now
+          اطلب الان
         </Link>
       </div>
     </div>

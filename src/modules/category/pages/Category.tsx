@@ -31,8 +31,9 @@ const Category = () => {
   });
 
   const globalState = useSelector((state: any) => state.global);
-  const { data, isLoading, refetch, isRefetching } = useGetData(
-    `/category/${globalState?.user?.userId}`
+  const { data, isLoading, refetch } = useGetData(
+    `/category/${globalState?.user?.userId}`,
+    `clientCategories-${globalState?.user?.userId}`
   );
   const [value, setValue] = useState<any>(null);
   const [displayImages, setdisplayImages] = useState<any>(null);
@@ -42,7 +43,6 @@ const Category = () => {
     name: yup.string().required("Name is a required field"),
     description: yup.string().required("Description is a required field"),
   });
-  const categoryId = data?.data?.[0]?._id;
   // -------------- functions ----------------
   const handleOpen = () => {
     setFormValues("name", "");
@@ -137,7 +137,7 @@ const Category = () => {
       });
   };
 
-  if (isLoading || isRefetching) {
+  if (isLoading) {
     return <Loading />;
   }
 

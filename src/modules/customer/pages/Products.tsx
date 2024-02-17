@@ -10,8 +10,9 @@ const Products = () => {
   // ------------- hooks -------------
   const navigate = useNavigate();
   const { categoryId, userId } = useParams();
-  const { data, isLoading, isRefetching } = useGetData(
-    `/customer/product/${categoryId}?userId=${userId}`
+  const { data, isLoading } = useGetData(
+    `/customer/product/${categoryId}?userId=${userId}`,
+    `restaurantProducts-${categoryId}`
   );
   const cartItems = useSelector((state: any) => state?.cart?.cartItems);
   const dispatch = useDispatch();
@@ -42,7 +43,7 @@ const Products = () => {
       </div>
 
       <div className="min-h-96 mt-10">
-        {isLoading || isRefetching ? (
+        {isLoading ? (
           <Loading />
         ) : (
           <div className="flex flex-row flex-wrap justify-start gap-5 m-5  ">

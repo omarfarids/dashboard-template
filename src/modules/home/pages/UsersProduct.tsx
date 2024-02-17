@@ -31,8 +31,9 @@ const UsersProduct = () => {
     edit: false,
     delete: false,
   });
-  const { data, refetch, isLoading, isRefetching } = useGetData(
-    `/product/${param.categoryId}`
+  const { data, refetch, isLoading } = useGetData(
+    `/product/${param.categoryId}`,
+    `adminProducts-${param.categoryId}`
   );
   const [value, setValue] = useState<any>(null);
   const [displayImages, setdisplayImages] = useState<any>(null);
@@ -142,7 +143,7 @@ const UsersProduct = () => {
       });
   };
 
-  if (isLoading || isRefetching) {
+  if (isLoading) {
     return <Loading />;
   }
 
