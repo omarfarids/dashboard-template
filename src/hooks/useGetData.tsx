@@ -3,11 +3,11 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 
-export const useGetData = (url: string) => {
+export const useGetData = (url: string, qryKey: string = "repoData") => {
   const navigate = useNavigate();
 
   const query: any = useQuery<any>({
-    queryKey: ["repoData"],
+    queryKey: [qryKey],
     queryFn: async () => {
       try {
         const response = await axios.get(import.meta.env.VITE_BASE_URL + url, {
