@@ -19,7 +19,10 @@ const Header = () => {
   console.log(user);
 
   return (
-    <div className="navbar bg-base-100 fixed bg-white z-10 shadow-md">
+    <div
+      className="navbar  fixed z-10 shadow-md"
+      style={{ backgroundColor: "#084e5a" }}
+    >
       <div className="flex-1">
         {user?.image?.length ? (
           <img className="w-8" src={user?.image} alt="avatar" />
@@ -28,7 +31,7 @@ const Header = () => {
 
       <div className="flex-none">
         <button
-          className="btn btn-ghost btn-circle"
+          className="btn btn-ghost btn-circle text-white"
           onClick={() => navigate(`${user?.username}`)}
         >
           Home
@@ -38,7 +41,7 @@ const Header = () => {
             <div className="indicator">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
+                className="h-5 w-5  text-white"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"

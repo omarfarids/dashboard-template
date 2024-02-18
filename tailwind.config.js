@@ -42,6 +42,7 @@ export default {
         dodgerblue: "#165dff",
         green: "#039f52",
         "shadow-color": "#0000008f",
+        cardBg: "#0b7180", //on hover
       },
 
       spacing: {

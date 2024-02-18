@@ -29,7 +29,12 @@ const Categories = () => {
   }, [isError]);
 
   return (
-    <div>
+    <div
+      style={{
+        backgroundColor: "#0b7180",
+        height: "100%",
+      }}
+    >
       <div className="hero min-h-screen">
         <img
           src={restaurantBG}
@@ -42,15 +47,15 @@ const Categories = () => {
           linger long after."
         </p>
       </div>
-      <div id="orders" className="min-h-96">
+      <div id="orders" className="min-h-96 rounded-xl bg-white mx-12 mt-10">
         {isLoading ? (
           <Loading />
         ) : (
-          <div className="flex flex-row flex-wrap justify-start gap-5 m-5">
+          <div className="flex flex-row flex-wrap justify-start gap-5 p-5">
             {data?.data?.map((item: any) => (
               <div
                 key={item?._id}
-                className="card card-compact w-80 bg-base-100 shadow-md hover:shadow-2xl cursor-pointer border border-gray"
+                className="card card-compact w-80 bg-base-100 shadow-md hover:shadow-2xl cursor-pointer border border-gray hover:bg-cardBg hover:text-white"
                 onClick={() => {
                   navigate(`/customer/products/${item?._id}/${userId}`);
                 }}
