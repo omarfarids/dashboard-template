@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import dammyProduct from "@/assets/product.webp";
 import { Link } from "react-router-dom";
-import { configureStore } from "@reduxjs/toolkit";
+import customer from "@/assets/customer.jpeg";
 
 const Orders = () => {
   // ------------- hooks -------------
@@ -67,7 +67,12 @@ const Orders = () => {
   console.log(cartItems);
 
   return (
-    <div className="bg-bgcolor h-full">
+    <div className="relative bg-bgcolor h-full">
+      <img
+        src={customer}
+        alt="customr"
+        className="w-full h-full opacity-50 object-cover absolute top-0 left-0 z-0  "
+      />
       <div>
         <div
           className="flex flex-col flex-wrap items-center justify-start gap-5 pt-20 "

@@ -29,7 +29,12 @@ const Categories = () => {
   }, [isError]);
 
   return (
-    <div className="bg-bgcolor h-full">
+    <div className="  h-full bg-bgcolor ">
+      {/* <img
+        src={customer}
+        alt="customr"
+        className="w-full h-full opacity-70 object-cover absolute top-0 left-0 z-0  "
+      /> */}
       <div className="hero min-h-screen">
         <img
           src={restaurantBG}
@@ -42,7 +47,7 @@ const Categories = () => {
           linger long after."
         </p>
       </div>
-      <div id="orders" className="min-h-96 rounded-xl bg-white mx-12 mt-10">
+      <div id="orders" className="min-h-96 rounded-xl mx-12 mt-10">
         {isLoading ? (
           <Loading />
         ) : (

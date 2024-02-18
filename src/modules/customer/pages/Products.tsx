@@ -2,13 +2,13 @@ import { useGetData } from "@/hooks/useGetData";
 import { setCartItems } from "@/store/reducers/cartReducer";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import dammyProduct from "@/assets/product.webp";
 import Loading from "@/components/Loading";
+import customer from "@/assets/customer.jpeg";
 
 const Products = () => {
   // ------------- hooks -------------
-  const navigate = useNavigate();
   const { categoryId, userId } = useParams();
   const { data, isLoading } = useGetData(
     `/customer/product/${categoryId}?userId=${userId}`,
@@ -19,10 +19,15 @@ const Products = () => {
   const [itemIDs, setItemIDs] = useState<any>([]);
 
   return (
-    <div className="bg-bgcolor h-full">
+    <div className=" relative bg-bgcolor h-full">
+      <img
+        src={customer}
+        alt="customr"
+        className="w-full h-full opacity-70 object-cover absolute top-0 left-0 z-0  "
+      />
       <div className="">s</div>
 
-      <div className="min-h-96 rounded-xl bg-white mx-12 mt-16">
+      <div className="min-h-96 rounded-xl  mx-12 mt-16">
         {isLoading ? (
           <Loading />
         ) : (
@@ -30,7 +35,7 @@ const Products = () => {
             {data?.data?.map((item: any) => (
               <div
                 key={item?._id}
-                className="card card-compact w-80 bg-base-100 shadow-md hover:shadow-2xl cursor-pointer border border-gray  hover:bg-cardBg hover:text-white"
+                className="card card-compact w-80 overflow-hidden bg-base-100 shadow-md hover:shadow-2xl cursor-pointer border border-gray  hover:bg-cardBg hover:text-white"
               >
                 <div>
                   <figure>
