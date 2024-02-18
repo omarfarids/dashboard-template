@@ -19,12 +19,7 @@ const Products = () => {
   const [itemIDs, setItemIDs] = useState<any>([]);
 
   return (
-    <div
-      style={{
-        backgroundColor: "#0b7180",
-        height: "100%",
-      }}
-    >
+    <div className="bg-bgcolor h-full">
       <div className="">s</div>
 
       <div className="min-h-96 rounded-xl bg-white mx-12 mt-16">

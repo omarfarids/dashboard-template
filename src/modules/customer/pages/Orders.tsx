@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import dammyProduct from "@/assets/product.webp";
 import { Link } from "react-router-dom";
+import { configureStore } from "@reduxjs/toolkit";
 
 const Orders = () => {
   // ------------- hooks -------------
@@ -57,21 +58,23 @@ const Orders = () => {
     );
     setOrderMessage(MergMessage);
   }, [cartItems, additional]);
+  const handleRemoveItem = (itemId: any) => {
+    const updatedCartItems = cartItems.filter(
+      (item: any) => item._id !== itemId
+    );
+    dispatch(setCartItems(updatedCartItems));
+  };
+  console.log(cartItems);
 
   return (
-    <div
-      style={{
-        backgroundColor: "#0b7180",
-        height: "100%",
-      }}
-    >
+    <div className="bg-bgcolor h-full">
       <div>
         <div
-          className="flex flex-col flex-wrap items-center justify-start gap-5 pt-20"
+          className="flex flex-col flex-wrap items-center justify-start gap-5 pt-20 "
           style={{ direction: "rtl" }}
         >
           {cartItems?.map((item: any) => (
-            <div className="card card-compact border border-gray bg-base-100 shadow-xl flex flex-col w-4/5 md:w-2/5 md:flex-row mx-5 gap-5 md:gap-20">
+            <div className="card card-compact border border-gray bg-base-100 shadow-xl flex flex-col w-4/5 md:w-2/5 md:flex-row mx-5 gap-5 md:gap-20 ">
               <div className="m-3">
                 <img
                   src={item?.image?.length ? item?.image : dammyProduct}
@@ -80,7 +83,9 @@ const Orders = () => {
                 />
                 <h2 className="card-title  justify-center">{item?.name}</h2>
               </div>
+
               <div className="card-body flex flex-col items-center md:items-end justify-end gap-5">
+                <h1 className="font-light text-lg">{item?.description}</h1>
                 <div className="flex flex-row gap-5 font-bold">
                   <p>السعر : {item?.price} </p>
                   <p>الكمية : {item?.quantity}</p>
@@ -127,7 +132,7 @@ const Orders = () => {
                   </button>
                   <button
                     className="btn bg-cardBg text-white hover:text-black"
-                    onClick={() => dispatch(setCartItems([]))}
+                    onClick={() => handleRemoveItem(item._id)}
                   >
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -151,7 +156,7 @@ const Orders = () => {
         </div>
         <div
           style={{ direction: "rtl" }}
-          className="card card-compact gap-5 bg-base-100 shadow-xl md:w-1/2 mx-auto mt-5 p-5 border border-base-300 card bg-base-100 shadow-xl flex justify-center"
+          className="card card-compact gap-5 bg-base-100 shadow-xl md:w-1/2 mx-auto mt-5 p-5 border border-base-300  flex justify-center"
         >
           <p className="font-bold text-[40px]">السعر الكلي : {price}</p>
           <textarea
@@ -163,7 +168,7 @@ const Orders = () => {
           <Link
             to={`https://wa.me/${user?.phone}/?text=${orderMessage}`}
             target="_blank"
-            className="btn link-accent  m-3"
+            className="btn link-accent  mt-3"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
