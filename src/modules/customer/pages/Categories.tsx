@@ -29,12 +29,7 @@ const Categories = () => {
   }, [isError]);
 
   return (
-    <div
-      style={{
-        backgroundColor: "#0b7180",
-        height: "100%",
-      }}
-    >
+    <div className="bg-bgcolor h-full">
       <div className="hero min-h-screen">
         <img
           src={restaurantBG}
