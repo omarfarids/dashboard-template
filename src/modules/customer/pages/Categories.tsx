@@ -55,7 +55,7 @@ const Categories = () => {
             {data?.data?.map((item: any) => (
               <div
                 key={item?._id}
-                className="card card-compact w-80 bg-base-100 shadow-md hover:shadow-2xl cursor-pointer border border-gray hover:bg-cardBg hover:text-white"
+                className="card card-compact w-80 bg-base-100 shadow-md hover:shadow-2xl cursor-pointer border border-gray hover:scale-105 hover:bg-softGray"
                 onClick={() => {
                   navigate(`/customer/products/${item?._id}/${userId}`);
                 }}

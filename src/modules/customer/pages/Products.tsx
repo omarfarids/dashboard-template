@@ -19,7 +19,7 @@ const Products = () => {
   const [itemIDs, setItemIDs] = useState<any>([]);
 
   return (
-    <div className=" relative bg-bgcolor h-full">
+    <div className="relative bg-bgcolor min-h-screen">
       <img
         src={customer}
         alt="customr"
@@ -35,7 +35,7 @@ const Products = () => {
             {data?.data?.map((item: any) => (
               <div
                 key={item?._id}
-                className="card card-compact w-80 overflow-hidden bg-base-100 shadow-md hover:shadow-2xl cursor-pointer border border-gray  hover:bg-cardBg hover:text-white"
+                className="card card-compact w-80 overflow-hidden bg-base-100 shadow-md hover:shadow-2xl cursor-pointer border border-gray hover:bg-softGray"
               >
                 <div>
                   <figure>

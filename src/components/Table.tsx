@@ -18,7 +18,7 @@ const Table = ({
 }: TableDataProps) => {
   const navigate = useNavigate();
   return (
-    <div className="border border-[#091E4224] rounded-lg shadow-md ">
+    <div className="border border-[#091E4224] bg-white rounded-lg shadow-md ">
       <div className="overflow-x-auto">
         <table className="table table-xs">
           <thead className="bg-lightGray">
