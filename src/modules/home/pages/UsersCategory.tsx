@@ -188,7 +188,7 @@ const UsersCategory = () => {
                 <input
                   type="number"
                   className="input my-5 input-bordered w-full input-md rounded-sm"
-                  placeholder="Subscription period"
+                  placeholder="Subscription period (monthly)"
                   value={subscriptionPeriod}
                   onChange={(e: any) => {
                     setSubscriptionPeriod(e.target.value);
