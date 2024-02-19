@@ -67,7 +67,7 @@ const Orders = () => {
   console.log(cartItems);
 
   return (
-    <div className="relative bg-bgcolor h-full">
+    <div className="relative bg-bgcolor min-h-screen">
       <img
         src={customer}
         alt="customr"
