@@ -35,19 +35,35 @@ const Categories = () => {
         alt="customr"
         className="w-full h-full opacity-70 object-cover absolute top-0 left-0 z-0  "
       /> */}
-      <div className="hero min-h-screen">
-        <img
-          src={restaurantBG}
-          className="w-full cover opacity-60 shadow-md"
-          alt="restaurant"
-        />
-        <p className="w-1/2 text-3xl font-bold text-center text-white">
-          "Indulge in our culinary creations, where each dish is crafted with
-          passion, offering flavors that dance on your palate and memories that
-          linger long after."
-        </p>
+      <div className=" ">
+        s
+        <div className=" m-10 mt-16">
+          <img
+            src={restaurantBG}
+            className="w-full cover opacity-60 shadow-md rounded-xl h-96"
+            alt="restaurant"
+          />
+        </div>
       </div>
-      <div id="orders" className="min-h-96 rounded-xl mx-12 mt-10">
+      <div className="divider mx-12"></div>
+      <div className="w-60 mx-12 ">
+        <label className="input input-bordered flex items-center gap-2">
+          <input type="text" className="grow" placeholder="Search" />
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 16 16"
+            fill="currentColor"
+            className="w-4 h-4 opacity-70"
+          >
+            <path
+              fillRule="evenodd"
+              d="M9.965 11.026a5 5 0 1 1 1.06-1.06l2.755 2.754a.75.75 0 1 1-1.06 1.06l-2.755-2.754ZM10.5 7a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Z"
+              clipRule="evenodd"
+            />
+          </svg>
+        </label>
+      </div>
+      <div id="orders" className="min-h-96 rounded-xl mx-4 mt-10">
         {isLoading ? (
           <Loading />
         ) : (
@@ -55,7 +71,7 @@ const Categories = () => {
             {data?.data?.map((item: any) => (
               <div
                 key={item?._id}
-                className="card card-compact w-80 bg-base-100 shadow-md hover:shadow-2xl cursor-pointer border border-gray hover:scale-105 hover:bg-softGray"
+                className="card card-compact w-56 bg-base-100 shadow-md hover:shadow-2xl cursor-pointer border border-gray hover:scale-105 hover:bg-softGray"
                 onClick={() => {
                   navigate(`/customer/products/${item?._id}/${userId}`);
                 }}

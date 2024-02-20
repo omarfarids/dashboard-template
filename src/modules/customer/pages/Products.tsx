@@ -31,11 +31,12 @@ const Products = () => {
         {isLoading ? (
           <Loading />
         ) : (
-          <div className="flex flex-row flex-wrap justify-start gap-5 p-5 ">
+          <div className="flex flex-row  flex-wrap justify-start gap-5 p-5">
             {data?.data?.map((item: any) => (
               <div
+                style={{ direction: "rtl" }}
                 key={item?._id}
-                className="card card-compact w-80 overflow-hidden bg-base-100 shadow-md hover:shadow-2xl cursor-pointer border border-gray hover:bg-softGray"
+                className="card card-compact w-64 overflow-hidden bg-base-100 shadow-md hover:shadow-2xl cursor-pointer border border-gray hover:bg-softGray"
               >
                 <div>
                   <figure>
@@ -64,7 +65,7 @@ const Products = () => {
                             setItemIDs((prev: any) => [...prev, item?._id]);
                           }}
                         >
-                          Add to card
+                          إضافة للسلة
                         </button>
                       ) : (
                         <button
@@ -82,12 +83,12 @@ const Products = () => {
                             );
                           }}
                         >
-                          Added
+                          تم اضافته
                         </button>
                       )}
                     </div>
                     <div>
-                      <p className="font-bold">Price : {item?.price}</p>
+                      <p className="font-bold">السعر : {item?.price}</p>
                     </div>
                   </div>
                 </div>

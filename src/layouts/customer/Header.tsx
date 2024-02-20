@@ -64,17 +64,17 @@ const Header = () => {
             tabIndex={0}
             className="mt-3 z-[1] card card-compact dropdown-content w-52 bg-base-100 shadow"
           >
-            <div className="card-body">
-              <span className="font-bold text-lg">
-                {cartItems.length} Items
+            <div className="card-body" style={{ direction: "rtl" }}>
+              <span className="font-bold text-lg">{cartItems.length} عنصر</span>
+              <span className="font-bold text-[15px]">
+                التكلفة الإجمالية : {price}
               </span>
-              <span className="text-info">Subtotal:{price}</span>
               <div className="card-actions">
                 <button
                   className="btn btn-neutral btn-block"
                   onClick={() => navigate(`/customer/orders`)}
                 >
-                  View cart
+                  إظهار السلة
                 </button>
               </div>
             </div>
