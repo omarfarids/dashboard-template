@@ -5,14 +5,13 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutate } from "@/hooks/useMutate";
 import Avatar from "@/components/Avatar";
-import HeadImg from "@/modules/user/component/HeaderImg";
-import BackImg from "@/modules/user/component/BackgroundImg";
 import { useEffect, useRef, useState } from "react";
 import { useGetData } from "@/hooks/useGetData";
 import Cookies from "js-cookie";
 import Loading from "@/components/Loading";
 import QRCode from "react-qr-code";
 import ChangePassword from "../component/ChangePassword";
+import { handleImageChange } from "@/utils/functions";
 
 const Settings = () => {
   // ------------ hooks -------------
@@ -20,8 +19,11 @@ const Settings = () => {
   const [image, setImage] = useState<any>(null);
   const { mutateAsync, isPending } = useMutate();
   const [displayImages, setdisplayImages] = useState<any>(null);
-  const [bgImg, setbgImg] = useState<any>(null);
-
+  const [themeData, setThemeData] = useState<any>({
+    headerImg: null,
+    bgImg: null,
+    bgColor: null,
+  });
   const { data, refetch, isLoading } = useGetData(
     `/user/${Cookies.get("username")}`,
     `userSettings-${Cookies.get("username")}`
@@ -60,6 +62,8 @@ const Settings = () => {
       .catch((error: any) => {
         console.log(error);
       });
+
+    console.log(themeData);
   };
 
   const copyContent = () => {
@@ -148,36 +152,56 @@ const Settings = () => {
             <TextInput placeholder="Email Address" {...register("email")} />
             <p>{errors.email?.message}</p>
           </div>
-          <p className=" font-semibold">Upload Header Photo</p>
-          <HeadImg
-            displayImages={bgImg}
-            setValue={setImage}
-            setDisplayImages={setbgImg}
+          <p className="font-semibold">Header Image</p>
+          <input
+            type="file"
+            onChange={(e: any) => {
+              setThemeData((prev: any) => {
+                return {
+                  ...prev,
+                  headerImg: handleImageChange(e),
+                };
+              });
+            }}
           />
-          <p className=" font-semibold">Upload Background Photo</p>
-          <BackImg
-            displayImages={bgImg}
-            setValue={setImage}
-            setDisplayImages={setbgImg}
+          <p className="font-semibold">Background Image</p>
+          <input
+            type="file"
+            onChange={(e: any) => {
+              setThemeData((prev: any) => {
+                return {
+                  ...prev,
+                  bgImg: handleImageChange(e),
+                };
+              });
+            }}
           />
           <div>
             <label className="form-control w-full max-w-xs">
               <div className="label">
-                <span className="label-text">Background Color</span>
+                <p className=" font-semibold">Background Color</p>
               </div>
-              <select className="select select-bordered">
-                <option disabled selected>
-                  Pick one
-                </option>
-                <option className="bg-black" value={"black"}>
-                  black
-                </option>
-                <option className=" bg-red-600" value={"red"}>
-                  red
-                </option>
-                <option>Lord of the Rings</option>
-                <option>Planet of the Apes</option>
-                <option>Star Trek</option>
+              <select
+                onChange={(e: any) =>
+                  setThemeData((prev: any) => {
+                    return {
+                      ...prev,
+                      bgColor: e.target.value,
+                    };
+                  })
+                }
+                className={`bg-[${themeData?.bgColor}] select-bordered`}
+              >
+                <option disabled></option>
+                <option className="bg-[#084e5a]" value={"#084e5a"}></option>
+                <option className="bg-[#292929]" value={"#292929"}></option>
+                <option className="bg-[#1B3C73]" value={"#1B3C73"}></option>
+                <option className="bg-[#0C2D57]" value={"#0C2D57"}></option>
+                <option className="bg-[#561C24]" value={"#561C24"}></option>
+                <option className="bg-[#294B29]" value={"#294B29"}></option>
+                <option className="bg-[#3E3232]" value={"#3E3232"}></option>
+                <option className="bg-[#332941]" value={"#332941"}></option>
+                <option className="bg-[#CFB997]" value={"#CFB997"}></option>
               </select>
             </label>
           </div>

@@ -26,3 +26,10 @@ export function handleSubscriptionDate(dateString: any, monthsToAdd: any) {
 
   return newDate.toISOString(); // Convert back to string in ISO format
 }
+
+export const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const fileList = e.target.files;
+  if (!fileList) return;
+
+  return fileList[0];
+};

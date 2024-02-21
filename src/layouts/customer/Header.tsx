@@ -16,13 +16,8 @@ const Header = () => {
     setPrice(total);
   }, [cartItems]);
 
-  console.log(user);
-
   return (
-    <div
-      className="navbar  fixed z-10 shadow-md"
-      style={{ backgroundColor: "#084e5a" }}
-    >
+    <div className="navbar bg-[#CFB997] fixed z-10 shadow-md">
       <div className="flex-1">
         {user?.image?.length ? (
           <img className="w-8" src={user?.image} alt="avatar" />
