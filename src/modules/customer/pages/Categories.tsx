@@ -29,7 +29,10 @@ const Categories = () => {
   }, [isError]);
 
   return (
-    <div className="  h-full bg-bgcolor ">
+    <div
+      className="  h-full bg-bgcolor opacity-70"
+      style={{ backgroundColor: "#941b10" }}
+    >
       {/* <img
         src={customer}
         alt="customr"

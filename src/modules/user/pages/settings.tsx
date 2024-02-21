@@ -5,6 +5,8 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutate } from "@/hooks/useMutate";
 import Avatar from "@/components/Avatar";
+import HeadImg from "@/modules/user/component/HeaderImg";
+import BackImg from "@/modules/user/component/BackgroundImg";
 import { useEffect, useRef, useState } from "react";
 import { useGetData } from "@/hooks/useGetData";
 import Cookies from "js-cookie";
@@ -18,6 +20,8 @@ const Settings = () => {
   const [image, setImage] = useState<any>(null);
   const { mutateAsync, isPending } = useMutate();
   const [displayImages, setdisplayImages] = useState<any>(null);
+  const [bgImg, setbgImg] = useState<any>(null);
+
   const { data, refetch, isLoading } = useGetData(
     `/user/${Cookies.get("username")}`,
     `userSettings-${Cookies.get("username")}`
@@ -143,6 +147,39 @@ const Settings = () => {
           <div>
             <TextInput placeholder="Email Address" {...register("email")} />
             <p>{errors.email?.message}</p>
+          </div>
+          <p className=" font-semibold">Upload Header Photo</p>
+          <HeadImg
+            displayImages={bgImg}
+            setValue={setImage}
+            setDisplayImages={setbgImg}
+          />
+          <p className=" font-semibold">Upload Background Photo</p>
+          <BackImg
+            displayImages={bgImg}
+            setValue={setImage}
+            setDisplayImages={setbgImg}
+          />
+          <div>
+            <label className="form-control w-full max-w-xs">
+              <div className="label">
+                <span className="label-text">Background Color</span>
+              </div>
+              <select className="select select-bordered">
+                <option disabled selected>
+                  Pick one
+                </option>
+                <option className="bg-black" value={"black"}>
+                  black
+                </option>
+                <option className=" bg-red-600" value={"red"}>
+                  red
+                </option>
+                <option>Lord of the Rings</option>
+                <option>Planet of the Apes</option>
+                <option>Star Trek</option>
+              </select>
+            </label>
           </div>
           <Button
             isLoading={isPending}
