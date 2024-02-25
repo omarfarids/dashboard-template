@@ -1,8 +1,8 @@
-import Settings from "../user/pages/settings";
+import User from "./pages/User";
 export default [
   {
-    path: "/settings",
-    element: <Settings />,
-    name: "Settings",
+    path: "/user",
+    element: <User />,
+    name: "User",
   },
 ];
