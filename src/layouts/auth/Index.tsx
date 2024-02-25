@@ -1,16 +1,15 @@
-import React from "react";
-// import { ToggleTheme } from "@/components"; // Uncomment this line when ToggleTheme component is available
 import { Outlet } from "react-router-dom";
+import logo from "@/assets/logoo.jpeg";
 
 const App = () => {
   return (
     <main>
-      <header className="relative flex flex-row justify-center items-center p-6 md:p-12">
-        Logo
+      <header className="relative flex flex-row justify-center items-center p-6">
+        <img src={logo} alt="logo" className="w-[50px] h-[50px]" />
         {/* <ToggleTheme /> */}
       </header>
 
-      <div className="h-[60vh] flex justify-center items-center p-5">
+      <div className="h-[80vh] flex justify-center items-center p-5">
         <Outlet />
       </div>
     </main>

@@ -30,12 +30,21 @@ export default {
     extend: {
       colors: {
         // ------------ primary ------------
-        "primary-500": "#2855DD",
+        primary: "#3271ff",
+        primaryHover: "#165dff0f",
 
         // ------------ Text ------------
         // ------------ general ------------
-        "soft-gray": "#f1f3f4", //gray on hover
+        gray: "#cdcdcd", //gray on hover
+        softGray: "#f6f8ff",
+        lightGray: "#ffffff99", //gray on hover
+        purple: "#7a39ff",
+        dodgerblue: "#165dff",
+        green: "#039f52",
         "shadow-color": "#0000008f",
+        // ------------ card ------------
+        bgcolor: "#0b7180",
+        cardBg: "#0b7180", //on hover
       },
 
       spacing: {

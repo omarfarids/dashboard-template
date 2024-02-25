@@ -1,7 +1,14 @@
-import React from "react";
+import { logoutUser } from "@/store/reducers/globalReducer";
+import Cookies from "js-cookie";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import user from "@/assets/user.png";
 
 const Dropdown = () => {
+  // ----------- hooks -------------
+  const dispatch = useDispatch();
+  const userState = useSelector((state: any) => state.global);
+
   return (
     <div className="dropdown dropdown-end">
       <div
@@ -12,7 +19,7 @@ const Dropdown = () => {
         <div className="avatar">
           <div className="w-14 rounded-full">
             <img
-              src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+              src={userState?.user?.image ? userState?.user?.image : user}
               alt="avatar"
             />
           </div>
@@ -28,14 +35,24 @@ const Dropdown = () => {
       </div>
       <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
         <li>
-          <Link to="/">Item 1</Link>
+          <Link to="/settings">Settings</Link>
         </li>
-        <li>
-          <Link to="/">Item 2</Link>
-        </li>
+
         <hr />
         <li className="pt-1">
-          <Link to="/auth/login">Logout</Link>
+          <Link
+            to="/auth/login"
+            onClick={() => {
+              Cookies.remove("token");
+              Cookies.remove("username");
+              Cookies.remove("image");
+              Cookies.remove("userId");
+              Cookies.remove("role");
+              dispatch(logoutUser());
+            }}
+          >
+            Logout
+          </Link>
         </li>
       </ul>
     </div>

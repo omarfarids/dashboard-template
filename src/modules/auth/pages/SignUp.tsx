@@ -5,21 +5,23 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useMutate } from "@/hooks/useMutate";
-import Cookies from "js-cookie";
-import { useDispatch } from "react-redux";
-import { registerUser } from "@/store/reducers/globalReducer";
-import { NAV_ITEMS } from "@/layouts/dashboard/constants";
-import ResetPassword from "../components/ResetPassword";
+import Avatar from "@/components/Avatar";
+import { useState } from "react";
 
-const Login = () => {
+const SignUp = () => {
   // ------------ hooks -------------
+  const [value, setValue] = useState<any>(null);
+  const [displayImages, setdisplayImages] = useState<any>(null);
   const { mutateAsync, isPending } = useMutate();
 
-  const dispatch = useDispatch();
-
   const schema = yup.object().shape({
-    email: yup.string().email().required(),
-    password: yup.string().required(),
+    username: yup.string().required("Username is a required field"),
+    email: yup.string().email().required("Email is a required field"),
+    phone: yup.string().required("Phone number is a required field"),
+    password: yup.string().required("Password is a required field"),
+    confirmPassword: yup
+      .string()
+      .required("Confirm Password is a required field"),
   });
 
   const {
@@ -35,27 +37,13 @@ const Login = () => {
   // ------------ functions ------------
   const onSubmit: SubmitHandler<any> = (data: any) => {
     mutateAsync({
-      url: "/auth/login",
+      url: "/auth/signup",
       method: "POST",
-      body: data,
+      body: { ...data, image: value },
     })
-      .then((data) => {
-        Cookies.set("token", data.data.token);
-        Cookies.set("username", data.data.username);
-        Cookies.set("image", data.data.image);
-        Cookies.set("userId", data.data.id);
-        Cookies.set("role", data.data.role);
-      })
       .then(() => {
-        dispatch(registerUser());
+        navigate("/auth/login");
       })
-      .then(() => {
-        const permittedRoute = NAV_ITEMS.find((route) => {
-          return route.role === "all" || route.role === Cookies.get("role");
-        });
-        navigate(permittedRoute?.path || "/home");
-      })
-
       .catch((error: any) => {
         console.log(error);
       });
@@ -67,30 +55,41 @@ const Login = () => {
         onSubmit={handleSubmit(onSubmit)}
         className="flex flex-col gap-2 items-center"
       >
-        <h1 className="text-3xl font-semibold mb-5">Login to your account</h1>
+        <h1 className="text-3xl font-semibold mb-5">Sign Up</h1>
+        <Avatar
+          displayImages={displayImages}
+          setDisplayImages={setdisplayImages}
+          setValue={setValue}
+        />
+        <TextInput placeholder="username..." {...register("username")} />
+        <p>{errors.username?.message}</p>
         <TextInput placeholder="Email Address" {...register("email")} />
         <p>{errors.email?.message}</p>
+        <TextInput
+          placeholder="Number ex(+964xxxxxxxxxx...)"
+          {...register("phone")}
+        />
+        <p>{errors.phone?.message}</p>
         <TextInput
           placeholder="Password"
           type="password"
           {...register("password")}
         />
         <p>{errors.password?.message}</p>
-        <Button
-          label="Login"
-          className="w-full rounded-sm mt-2"
-          isLoading={isPending}
+        <TextInput
+          placeholder="Confirm Password"
+          type="password"
+          {...register("confirmPassword")}
         />
-        {/* <Link
-          className="underline font-semibold mt-5 text-gray hover:text-softGray"
-          to={"/auth/sign-up"}
-        >
-          Don't have an account? Sign Up
-        </Link> */}
-        <ResetPassword />
+        <p>{errors.confirmPassword?.message}</p>
+        <Button
+          isLoading={isPending}
+          label="Submit"
+          className="w-full rounded-sm mt-2"
+        />
       </form>
     </section>
   );
 };
 
-export default Login;
+export default SignUp;

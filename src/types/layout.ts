@@ -26,4 +26,5 @@ export interface Type_Nav_Items {
   name: string;
   path: string;
   icon: string;
+  role: string;
 }

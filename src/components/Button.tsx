@@ -1,34 +1,34 @@
-import React from "react";
-
 interface ButtonProps {
   icon?: string;
   iconWrapperClassName?: string;
   isLoading?: boolean;
-  disabled?: boolean;
   label?: string;
   className?: string;
+  onClick?: () => void;
 }
 
 const Button = ({
   icon,
   iconWrapperClassName,
   isLoading,
-  disabled,
-  className,
+  className = "w-full",
   label,
   ...props
 }: ButtonProps) => {
   return (
     <button
       type="submit"
-      className={`btn btn-primary sm:w-[450px] bg-primary-500 w-full relative capitalize text-base ${className} ${
+      className={`btn btn-primary bg-primary-500 relative capitalize text-base ${className} ${
         icon ? "justify-start" : ""
       }`}
-      disabled={isLoading || disabled}
       {...props}
     >
       <span>
-        {label}
+        {isLoading ? (
+          <span className="loading loading-dots loading-md"></span>
+        ) : (
+          label
+        )}
         {icon && isLoading && <span className="loading loading-ring"></span>}
       </span>
       {icon && (
