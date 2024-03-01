@@ -18,7 +18,7 @@ const Button = ({
   return (
     <button
       type="submit"
-      className={`btn btn-primary bg-primary-500 relative capitalize text-base ${className} ${
+      className={`btn btn-primary hover:bg-[#494E67dd] border-0 text-white bg-[#494E67] relative capitalize text-base ${className} ${
         icon ? "justify-start" : ""
       }`}
       {...props}

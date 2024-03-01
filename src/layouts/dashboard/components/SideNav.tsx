@@ -2,7 +2,7 @@ import { Type_Nav_Items } from "@/types/layout";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { NavLink, useLocation } from "react-router-dom";
-import logo from "@/assets/logoo.jpeg";
+import AppsIcon from "@mui/icons-material/Apps";
 
 const Sidebar = ({ navItems }: { navItems: Type_Nav_Items[] }) => {
   const [isSideBarOpen, setIsSideBarOpen] = useState(false);
@@ -16,19 +16,17 @@ const Sidebar = ({ navItems }: { navItems: Type_Nav_Items[] }) => {
   return (
     <>
       <div
-        className="absolute flex justify-center items-center top-3 left-5 cursor-pointer w-8 h-8 rounded-full hover:bg-soft-gray z-20 md:hidden"
+        className="absolute flex justify-center items-center top-3 bg-[#ffffff44] left-5 cursor-pointer w-8 h-8 rounded-full hover:bg-soft-gray z-20 md:hidden"
         onClick={toggleSideBar}
       >
-        <i className="pi pi-bars"></i>
+        <AppsIcon />
       </div>
       <div
         className={`${
           isSideBarOpen ? "w-[350px]" : "w-0"
-        } bg-white md:w-1/5 h-screen md:shadow-lg shadow-2xl overflow-hidden z-10 absolute md:relative transition-all`}
+        } bg-[#494E67] md:w-1/5 text-white h-screen md:shadow-lg shadow-2xl overflow-hidden z-10 absolute md:relative transition-all`}
       >
-        <div className="p-10">
-          <img src={logo} alt="logo" className="w-[50px] h-[50px]" />
-        </div>
+        <div className="p-10">Logo</div>
         <div className="mt-6">
           {navItems
             ?.filter(
@@ -41,7 +39,7 @@ const Sidebar = ({ navItems }: { navItems: Type_Nav_Items[] }) => {
                 to={item.path}
                 className={`${
                   item.path.slice(1) === pathname?.split("/")[1] &&
-                  "active-route"
+                  "bg-[#ffffff44] text-white"
                 } flex items-center gap-2 p-4 text-xl font-semibold hover:bg-soft-gray`}
               >
                 <i className={item.icon}></i>

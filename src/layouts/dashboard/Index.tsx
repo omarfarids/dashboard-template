@@ -10,7 +10,7 @@ const MainLayout = () => {
         <SideNav navItems={NAV_ITEMS} />
         <div className="w-full md:w-4/5">
           <Header />
-          <div className="h-[85vh] overflow-y-auto bg-softGray">
+          <div className="h-[85vh] overflow-y-auto bg-lightGray">
             <Outlet />
           </div>
         </div>

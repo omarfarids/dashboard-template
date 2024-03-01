@@ -1,15 +1,12 @@
 import { Outlet } from "react-router-dom";
-import logo from "@/assets/logoo.jpeg";
 
 const App = () => {
   return (
-    <main>
-      <header className="relative flex flex-row justify-center items-center p-6">
-        <img src={logo} alt="logo" className="w-[50px] h-[50px]" />
-        {/* <ToggleTheme /> */}
-      </header>
-
-      <div className="h-[80vh] flex justify-center items-center p-5">
+    <main className="h-screen w-screen flex flex-row">
+      <div className="w-1/3  h-full bg-[#494E67] hidden md:flex justify-center items-center">
+        <div className="text-white text-3xl">Logo</div>
+      </div>
+      <div className="flex justify-center items-center w-full md:w-2/3">
         <Outlet />
       </div>
     </main>
