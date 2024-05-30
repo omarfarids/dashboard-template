@@ -6,6 +6,6 @@ const AuthGuard = () => {
   const auth = true;
   // Cookies.get("token");
 
-  return auth ? <Dashboard /> : <Navigate to="/auth/login" />;
+  return auth ? <Dashboard /> : <Navigate replace to="/auth/login" />;
 };
 export default AuthGuard;

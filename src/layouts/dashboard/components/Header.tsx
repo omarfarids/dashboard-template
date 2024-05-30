@@ -5,7 +5,7 @@ const Header = () => {
   // const { pathname } = useLocation();
 
   return (
-    <div className="flex justify-between items-center p-2 shadow-md">
+    <div className="flex justify-between items-center h-[10vh] p-2 shadow-md">
       <h1 className="text-3xl font-semibold capitalize">
         {/* {pathname.slice(1).split("/")[0]} */}
       </h1>

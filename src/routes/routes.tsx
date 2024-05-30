@@ -5,21 +5,25 @@ import authRoutes from "@/modules/auth/routes";
 import settingsRoutes from "@/modules/user/routes";
 import clientRoutes from "@/modules/client/routes";
 import AuthGuard from "@/auth/AuthGuard";
+import ErrorPage from "@/components/ErrorPage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <AuthGuard />,
+    errorElement: <ErrorPage />,
     children: [...settingsRoutes],
   },
   {
     path: "/auth",
     element: <Auth />,
+    errorElement: <ErrorPage />,
     children: [...authRoutes],
   },
   {
     path: "/client",
     element: <Client />,
+    errorElement: <ErrorPage />,
     children: [...clientRoutes],
   },
 ]);
