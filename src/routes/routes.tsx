@@ -6,6 +6,7 @@ import settingsRoutes from "@/modules/user/routes";
 import clientRoutes from "@/modules/client/routes";
 import AuthGuard from "@/auth/AuthGuard";
 import ErrorPage from "@/components/ErrorPage";
+import NotFound from "@/components/NotFound";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
     element: <Client />,
     errorElement: <ErrorPage />,
     children: [...clientRoutes],
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ]);
 
