@@ -16,7 +16,6 @@ export const useMutate = () => {
           data: body,
           headers: {
             Authorization: `Bearer ${Cookies.get("token")}`,
-            "Content-Type": "multipart/form-data",
           },
         });
 

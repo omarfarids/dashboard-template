@@ -18,8 +18,8 @@ const Settings = () => {
   const [displayImages, setdisplayImages] = useState<any>(null);
 
   const { data, refetch, isLoading } = useGetData(
-    `/user/${Cookies.get("username")}`,
-    `userSettings-${Cookies.get("username")}`
+    `/user/${Cookies.get("userId")}`,
+    `userSettings-${Cookies.get("userId")}`
   );
 
   const schema = yup.object().shape({

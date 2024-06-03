@@ -39,7 +39,7 @@ const SignUp = () => {
     mutateAsync({
       url: "/auth/signup",
       method: "POST",
-      body: { ...data, image: value },
+      body: { ...data, image: value, role: "admin" },
     })
       .then(() => {
         navigate("/auth/login");
